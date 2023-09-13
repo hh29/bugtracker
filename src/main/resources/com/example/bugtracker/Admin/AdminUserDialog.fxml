@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.ComboBox?>
+<AnchorPane prefHeight="696.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bugtracker.Controller.DialogController.AdminUserDialogController">
+    <children>
+        <TextField fx:id="userNameLabel" alignment="BOTTOM_LEFT" layoutX="83.0" layoutY="28.0" prefHeight="28.0" prefWidth="260.0" promptText="Username" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <TextField fx:id="firstNameLabel" layoutX="83.0" layoutY="98.0" prefHeight="28.0" prefWidth="260.0" promptText="First Name" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <TextField fx:id="surnameLabel" layoutX="83.0" layoutY="168.0" prefHeight="28.0" prefWidth="260.0" promptText="Last Name" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <Button fx:id="okButton" layoutX="120.0" layoutY="654.0" mnemonicParsing="false" onAction="#handleOkButton" prefHeight="28.0" prefWidth="85.0" style="-fx-background-color: #0598ff;" text="OK" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
+        <Button fx:id="cancelButton" layoutX="230.0" layoutY="654.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="28.0" prefWidth="85.0" style="-fx-background-color: #0598ff;" text="Cancel" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
+        <TextField fx:id="emailLabel" layoutX="83.0" layoutY="308.0" prefHeight="28.0" prefWidth="260.0" promptText="Email Address" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <ComboBox fx:id="roleComboBox" layoutX="83.0" layoutY="238.0" opacity="0.41" prefHeight="28.0" prefWidth="260.0" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <DatePicker fx:id="dob" layoutX="83.0" layoutY="378.0" prefHeight="26.0" prefWidth="270.0" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <ListView fx:id="assignedProjects" layoutX="83.0" layoutY="453.0" prefHeight="194.0" prefWidth="270.0" style="-fx-background-color: transparent;"/>
+      <Label layoutX="132.0" layoutY="431.0" text="Assigned Projects">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

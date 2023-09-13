@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bugtracker.Controller.Chat.ChatController">
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="491.0" prefWidth="500.0">
+            <content>
+            <ScrollPane fx:id="chatScrollPane" hbarPolicy="NEVER" style="-fx-background-color: #F5F5F5;" vbarPolicy="ALWAYS">
+               <content>
+                      <VBox fx:id="chatContainer" spacing="10.0" style="-fx-padding: 10px; -fx-background-color: #F5F5F5;">
+                </VBox>
+               </content>
+            </ScrollPane>
+            </content>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox prefHeight="112.0" prefWidth="500.0" spacing="10.0" style="-fx-padding: 10px 0px 0px 0px; -fx-background-color: #F5F5F5;">
+            <Pane prefHeight="141.0" prefWidth="436.0" VBox.vgrow="ALWAYS">
+                <children>
+                    <TextArea fx:id="messageTextArea" layoutX="5.0" prefHeight="89.0" prefWidth="435.0" promptText="Type a message..." style="-fx-background-color: transparent;" wrapText="true">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </TextArea>
+               <Label contentDisplay="TOP" layoutX="19.0" layoutY="-7.0" opacity="0.86" prefHeight="16.0" prefWidth="283.0" style="-fx-background-color: #F5FBFF;" visible="false">
+                  <font>
+                     <Font name="Microsoft Sans Serif" size="13.0" />
+                  </font>
+               </Label>
+                </children>
+            </Pane>
+         <Pane prefHeight="101.0" prefWidth="52.0">
+            <children>
+               <Button layoutY="11.0" onAction="#insertComment" prefHeight="46.0" prefWidth="44.0" style="-fx-background-color: transparent">
+                  <graphic>
+                     <ImageView fitHeight="43.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../images/icons8-send-90.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </Button>
+            </children>
+         </Pane>
+        </HBox>
+    </bottom>
+</BorderPane>

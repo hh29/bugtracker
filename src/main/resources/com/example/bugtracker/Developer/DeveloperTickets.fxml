@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1450.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bugtracker.Controller.Developer.DeveloperTicketsController">
+    <children>
+    <VBox prefHeight="590.0" prefWidth="146.0" style="-fx-background-color: #EBE8F9;">
+        <children>
+            <Pane prefHeight="116.0" prefWidth="145.0" style="-fx-background-color: #0598ff;">
+                <children>
+                    <Label layoutX="30.0" layoutY="55.0" prefHeight="64.0" prefWidth="102.0" text="Bug Tracker" textFill="WHITE">
+                        <font>
+                            <Font name="System Bold" size="17.0" />
+                        </font>
+                    </Label>
+                    <ImageView fitHeight="64.0" fitWidth="44.0" layoutX="50.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-bug-100.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane>
+                <children>
+                    <Button fx:id="dashboardButton" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Dashboard">
+                        <font>
+                            <Font name="Apple Braille" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <ImageView fitHeight="20.0" fitWidth="14.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-dashboard-50.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane prefHeight="57.0" prefWidth="126.0">
+                <children>
+                    <Button fx:id="ticketsButton" layoutX="-2.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="Tickets">
+                        <font>
+                            <Font name="Apple Braille" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <ImageView fitHeight="20.0" fitWidth="16.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-tickets-50.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane prefHeight="57.0" prefWidth="136.0">
+                <children>
+                    <Button fx:id="projectsButton" layoutX="2.0" layoutY="3.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Projects">
+                        <font>
+                            <Font name="Apple Braille" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <ImageView fitHeight="26.0" fitWidth="16.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-projects-50.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane prefHeight="56.0" prefWidth="140.0">
+                <children>
+                    <Button fx:id="settingsButton" layoutX="4.0" layoutY="3.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="Settings">
+                        <font>
+                            <Font name="Apple Braille" size="14.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="23.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-settings-50.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </Pane>
+            <Pane prefHeight="0.0" prefWidth="145.0" />
+            <Pane prefHeight="423.0" prefWidth="172.0">
+                <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="379.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Logout">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="Apple Braille" size="14.0" />
+                    </font>
+                </Button>
+                <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../images/icons8-logout-100.png" />
+                    </image>
+                </ImageView>
+            </Pane>
+
+        </children>
+    </VBox>
+        <SplitPane orientation="VERTICAL" prefHeight="850.0" prefWidth="1302.0" style="-fx-background-color: transparent;">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="848.0" prefWidth="971.0">
+                    <children>
+                        <Label layoutX="538.0" layoutY="56.0" prefHeight="54.0" prefWidth="134.0" text="My Tickets" textAlignment="CENTER" wrapText="true">
+                            <font>
+                                <Font name="Arial Rounded MT Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Pane layoutX="1.0" layoutY="115.0" opacity="0.5" prefHeight="3.0" prefWidth="1291.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" />
+                  <TableView fx:id="tableView" layoutX="8.0" layoutY="192.0" prefHeight="543.0" prefWidth="1287.0" style="-fx-padding: 0px 0px 2px 0px; -fx-background-color: transparent;">
+                    <columns>
+                      <TableColumn fx:id="projectColumn" prefWidth="136.0" style="-fx-background-color: transparent;" text="Project" />
+                      <TableColumn fx:id="ticketColumn" prefWidth="383.0" style="fx-background-color: transparent;" text="Ticket" />
+                        <TableColumn fx:id="statusColumn" prefWidth="173.0" style="fx-background-color: transparent;" text="Status" />
+                        <TableColumn fx:id="priorityColumn" prefWidth="153.0" style="fx-border-width: transparent;" text="Priority" />
+                        <TableColumn fx:id="dateCreatedColumn" prefWidth="150.0" style="fx-background-color: transparent;" text="Date Created" />
+                        <TableColumn fx:id="severityColumn" prefWidth="125.0" style="fx-border-width: transparent;" text="Severity" />
+                        <TableColumn fx:id="timeToCompleteColumn" prefWidth="167.0" style="fx-border-width: transparent;" text="Time To Complete" />
+                    </columns>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </TableView>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1169.0" layoutY="137.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-edit-100.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="editButton" layoutX="1169.0" layoutY="135.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button" />
+                        <ImageView fitHeight="33.0" fitWidth="30.0" layoutX="1206.0" layoutY="134.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-delete-100.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="deleteButton" layoutX="1206.0" layoutY="132.0" onAction="#handleDeleteButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="chatButton" layoutX="1247.0" layoutY="135.0" onAction="#handleChatButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1247.0" layoutY="135.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-chat-100.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="sortButton" layoutX="215.0" layoutY="141.0" onAction="#handleSortButton" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #0598ff;" text="Sort" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+
+                        <ComboBox fx:id="sortComboBox" layoutX="14.0" layoutY="139.0" opacity="0.45" prefHeight="25.0" prefWidth="180.0" promptText="Sort By" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+
+                    </children>
+
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</HBox>

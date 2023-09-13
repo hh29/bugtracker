@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bugtracker.Controller.Chat.CommentBubbleController">
+   <Pane>
+      <children>
+         <Label fx:id="nameLabel" layoutX="6.0" layoutY="7.0" prefHeight="17.0" prefWidth="327.0" text="Name Label">
+            <font>
+               <Font name="Arial Bold" size="15.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
+   <Pane>
+      <children>
+         <Label fx:id="textLabel" layoutX="6.0" prefHeight="27.0" text="Comment Text" wrapText="true">
+            <prefWidth>460.0</prefWidth>
+            <font>
+               <Font name="Al Bayan Plain" size="14.0" />
+            </font>
+         </Label>
+      </children>
+   </Pane>
+   <Pane>
+      <children>
+      </children>
+   </Pane>
+   <HBox spacing="10.0">
+      <Region HBox.hgrow="ALWAYS" />
+      <Label fx:id="timestampLabel" alignment="CENTER" opacity="0.6" prefHeight="14.0" prefWidth="134.0" text="Timestamp Label">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+   </HBox>
+</VBox>

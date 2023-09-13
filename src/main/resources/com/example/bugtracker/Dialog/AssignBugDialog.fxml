@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="575.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bugtracker.Controller.DialogController.AssignBugDialogController">
+    <children>
+        <TextField fx:id="bugTitle" alignment="BOTTOM_LEFT" layoutX="63.0" layoutY="38.0" prefHeight="28.0" prefWidth="260.0" promptText="Bug Title" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <TextField fx:id="bugDescription" layoutX="63.0" layoutY="108.0" prefHeight="28.0" prefWidth="260.0" promptText="Description" style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <TextField fx:id="estimatedTime" layoutX="63.0" layoutY="388.0" prefHeight="28.0" prefWidth="260.0" promptText="Estimated Time " style="-fx-border-width: 0px 0px 2px 0px; -fx-background-color: transparent; -fx-border-color: #0598ff;" />
+        <ComboBox fx:id="statusComboBox" layoutX="63.0" layoutY="178.0" opacity="0.55" prefHeight="28.0" prefWidth="260.0" promptText="Status" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #0598ff;" />
+        <ComboBox fx:id="priorityComboBox" layoutX="63.0" layoutY="248.0" opacity="0.62" prefHeight="28.0" prefWidth="260.0" promptText="Priority" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #0598ff;" />
+        <Button fx:id="okButton" layoutX="87.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleOkButton" prefHeight="28.0" prefWidth="85.0" style="-fx-background-color: #0598ff;" text="OK" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
+        <Button fx:id="cancelButton" layoutX="205.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="28.0" prefWidth="85.0" style="-fx-background-color: #0598ff;" text="Cancel" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor></Button>
+        <ComboBox fx:id="severityComboBox" layoutX="63.0" layoutY="318.0" opacity="0.62" prefHeight="28.0" prefWidth="260.0" promptText="Severity" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #0598ff;" />
+      <ComboBox fx:id="assignedToComboBox" layoutX="63.0" layoutY="458.0" opacity="0.62" prefHeight="28.0" prefWidth="260.0" promptText="Assign To" style="-fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #0598ff;" />
+    </children>
+</AnchorPane>
