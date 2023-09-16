@@ -198,6 +198,7 @@ public class DeveloperTicketsController implements Initializable {
                 if (deletionSuccessful) {
                     // Remove the bug from the TableView
                     tableView.getItems().remove(selectedBug);
+                    BugDAO.deleteBug(selectedBug);
 
                     // Show a success message
                     showAlert("Ticket Deleted", "The selected ticket has been deleted successfully.");

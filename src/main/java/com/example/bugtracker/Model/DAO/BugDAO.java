@@ -2,6 +2,7 @@ package com.example.bugtracker.Model.DAO;
 
 import com.example.bugtracker.DBConnection.DBConnection;
 import com.example.bugtracker.Model.Entity.*;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.sql.Date;
@@ -23,7 +24,7 @@ public class BugDAO {
                 "WHERE bu.user_id = ?";
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))  {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, user.getUserId());
             ResultSet resultSet = statement.executeQuery();
 
@@ -40,8 +41,6 @@ public class BugDAO {
                 String severity = resultSet.getString("severity");
                 String projectName = resultSet.getString("project_name");
                 int projectId = resultSet.getInt("project_id");
-
-
 
 
                 // Fetch reporter details
@@ -90,8 +89,7 @@ public class BugDAO {
 
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))
-        {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, selectedProject.getProjectId());
             ResultSet resultSet = statement.executeQuery();
 
@@ -120,8 +118,6 @@ public class BugDAO {
 
                 String assigneeFirstName = resultSet.getString("assignee_first_name");
                 String assigneeLastName = resultSet.getString("assignee_last_name");
-
-
 
 
                 // Set bug object
@@ -189,7 +185,7 @@ public class BugDAO {
     public static boolean deleteBug(Bug bug) {
         String query = "DELETE FROM bugs WHERE bug_id = ?";
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))  {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, bug.getBugId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -205,7 +201,7 @@ public class BugDAO {
                 "WHERE bug_id = ?";
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))   {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, bug.getBugTitle());
             statement.setString(2, bug.getBugDescription());
@@ -243,6 +239,7 @@ public class BugDAO {
 
         return numberOfUnresolvedBugs;
     }
+
     public static String getAverageResolutionTime() {
         Duration totalDuration = Duration.ZERO;
         int resolvedBugsCount = 0;
@@ -289,6 +286,7 @@ public class BugDAO {
             throw new RuntimeException(e);
         }
     }
+
     public static int getNumberOfActiveProjects() {
         int numberOfActiveProjects = 0;
         String query = "SELECT COUNT(DISTINCT projects.project_id) AS active_projects\n" +
@@ -308,6 +306,7 @@ public class BugDAO {
         }
         return numberOfActiveProjects;
     }
+
     public static Map<String, Integer> getBugCountsByMonth() {
         String query = "SELECT TO_CHAR(created_date, 'YYYY-MM') AS month, COUNT(*) AS bug_count " +
                 "FROM bugs " +
@@ -333,6 +332,7 @@ public class BugDAO {
 
         return bugCounts;
     }
+
     public static User getAssignedUserForBug(Bug bug) throws SQLException {
         User assignedUser = null;
         String query = "SELECT u.* FROM public.users u " +
@@ -356,6 +356,7 @@ public class BugDAO {
         }
         return assignedUser;
     }
+
     public static void assignBugToUser(Bug bug, User user) {
         String query = "INSERT INTO bug_user (bug_id, user_id) VALUES (?, ?)";
         try (Connection connection = DBConnection.getConnection();
@@ -369,6 +370,7 @@ public class BugDAO {
             e.printStackTrace();
         }
     }
+
     public static void removeBugFromUser(Bug bug, User user) throws SQLException {
         String query = "DELETE FROM public.bug_user WHERE bug_id = ? AND user_id = ?";
 
@@ -383,108 +385,10 @@ public class BugDAO {
             throw e; // You can handle the exception as needed
         }
     }
-    public static int getUnassignedBugCountForProject(User projectManager, Project project) {
-        int unassignedBugCount = 0;
-        String query = "SELECT COUNT(b.bug_id) AS unassigned_bug_count " +
-                "FROM projects p " +
-                "INNER JOIN project_user pu ON p.project_id = pu.project_id " +
-                "LEFT JOIN bugs b ON p.project_id = b.project_id " +
-                "LEFT JOIN bug_user bu ON b.bug_id = bu.bug_id " +
-                "WHERE pu.user_id = ? AND p.project_id = ? AND bu.user_id IS NULL";
 
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, projectManager.getUserId());
-            preparedStatement.setInt(2, project.getProjectId());
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    unassignedBugCount = resultSet.getInt("unassigned_bug_count");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return unassignedBugCount;
-    }
-    public static String getAverageResolutionTimeForUserInProject(User projectManager, Project project) {
-        Duration totalDuration = Duration.ZERO;
-        int resolvedBugsCount = 0;
-
-        String query = "SELECT b.created_date, b.updated_date " +
-                "FROM bugs b " +
-                "INNER JOIN bug_user bu ON b.bug_id = bu.bug_id " +
-                "WHERE bu.user_id = ? AND b.project_id = ? AND b.status = 'Resolved'";
-
-        try {
-            try (Connection connection = getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-                preparedStatement.setInt(1, projectManager.getUserId());
-                preparedStatement.setInt(2, project.getProjectId());
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
-                    Timestamp createdTimestamp = resultSet.getTimestamp("created_date");
-                    Timestamp updatedTimestamp = resultSet.getTimestamp("updated_date");
-
-                    if (createdTimestamp != null && updatedTimestamp != null) {
-                        resolvedBugsCount++;
-                        totalDuration = totalDuration.plus(Duration.between(createdTimestamp.toLocalDateTime(), updatedTimestamp.toLocalDateTime()));
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (resolvedBugsCount > 0) {
-                long totalMinutes = totalDuration.toMinutes();
-                long averageMinutes = totalMinutes / resolvedBugsCount;
-
-                long days = averageMinutes / (24 * 60);
-                long hours = (averageMinutes % (24 * 60)) / 60;
-
-                if (days > 0) {
-                    return String.format("%d days", days);
-                } else {
-                    return String.format("%d hours", hours);
-                }
-            } else {
-                return "N/A"; // No resolved bugs for the user in the project
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static int getUnresolvedBugsForUserInProject(User user, Project project) {
-        int numberOfUnresolvedBugs = 0;
-        String query = "SELECT COUNT(*) AS unresolved_bugs\n" +
-                "FROM bugs b\n" +
-                "INNER JOIN project_user pu ON b.project_id = pu.project_id\n" +
-                "WHERE pu.user_id = ? AND b.project_id = ? AND b.status <> 'Closed';\n";
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, user.getUserId());
-            preparedStatement.setInt(2, project.getProjectId());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                numberOfUnresolvedBugs = resultSet.getInt("unresolved_bugs");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return numberOfUnresolvedBugs;
-    }
     public static void assignBugToTester(int projectId, int bugId) {
         try (Connection connection = DBConnection.getConnection()) {
-            // Find testers (users with the "Tester" role) within the same project
+            // Find testers within the same project
             String query = "SELECT pu.user_id " +
                     "FROM public.project_user pu " +
                     "JOIN public.user_roles ur ON pu.user_id = ur.user_id " +
@@ -492,7 +396,7 @@ public class BugDAO {
                     "WHERE pu.project_id = ? AND r.role_title = 'Tester'";
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, projectId); // Assuming projectId is available
+                statement.setInt(1, projectId);
 
                 try (ResultSet resultSet = statement.executeQuery()) {
                     List<Integer> testerUserIds = new ArrayList<>();
@@ -500,42 +404,42 @@ public class BugDAO {
                         testerUserIds.add(resultSet.getInt("user_id"));
                     }
 
-                    // Choose a tester randomly from the list
-                    if (!testerUserIds.isEmpty()) {
-                        int randomIndex = new Random().nextInt(testerUserIds.size());
-                        int selectedTesterUserId = testerUserIds.get(randomIndex);
+                    // Find the tester with the least tasks
+                    int selectedTesterUserId = findTesterWithLeastTasks(projectId);
 
-
+                    if (selectedTesterUserId != -1) {
                         // Update the bug's assigned developer (tester) ID
-                        assignBugToUser(bugId,selectedTesterUserId);
-                        }
+                        assignBugToUser(bugId, selectedTesterUserId);
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public static void assignBugToUser(int bugId, int userId) {
-            String query = "INSERT INTO public.bug_user (bug_id, user_id) VALUES (?, ?)";
+        String query = "INSERT INTO public.bug_user (bug_id, user_id) VALUES (?, ?)";
 
-            try (Connection connection = DBConnection.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-                statement.setInt(1, bugId);
-                statement.setInt(2, userId);
+            statement.setInt(1, bugId);
+            statement.setInt(2, userId);
 
-                int rowsInserted = statement.executeUpdate();
+            int rowsInserted = statement.executeUpdate();
 
-                if (rowsInserted > 0) {
-                    // Association created successfully
-                } else {
-                    // Association creation failed
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (rowsInserted > 0) {
+                // Association created successfully
+            } else {
+                // Association creation failed
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    public static Integer getAssignedDeveloper(int bugId) {
+    }
+
+    public static Integer getAssignedUser(int bugId) {
         try (Connection connection = DBConnection.getConnection()) {
             String query = "SELECT user_id FROM public.bug_user WHERE bug_id = ?";
 
@@ -555,75 +459,71 @@ public class BugDAO {
 
         return null; // Return null if no assigned developer is found
     }
-    public static void reassignBugToTester(int projectId, Bug bug) {
-        // Check if the bug's status is changing to "Testing"
 
-        if (bug != null && "Testing".equals(bug.getStatus())) {
-            // Get a list of testers in the project who have the least tasks
-            List<Integer> testersWithLeastTasks = findTestersWithLeastTasks(projectId);
+    public static int findTesterWithLeastTasks(int projectId) {
+        try (Connection connection = DBConnection.getConnection()) {
+            // Find testers within the same project and their task counts
+            String query = "SELECT pu.user_id, COUNT(bu.bug_id) AS bug_count " +
+                    "FROM public.project_user pu " +
+                    "JOIN public.user_roles ur ON pu.user_id = ur.user_id " +
+                    "JOIN public.roles r ON ur.role_id = r.role_id " +
+                    "LEFT JOIN public.bug_user bu ON pu.user_id = bu.user_id " +
+                    "WHERE pu.project_id = ? AND r.role_title = 'Tester' " +
+                    "GROUP BY pu.user_id " +
+                    "ORDER BY bug_count ASC";
 
-            if (!testersWithLeastTasks.isEmpty()) {
-                // Choose a tester randomly from the list
-                int selectedTesterUserId = chooseRandomTester(testersWithLeastTasks);
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, projectId);
 
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    int minTaskCount = Integer.MAX_VALUE;
+                    List<Integer> testersWithMinTasks = new ArrayList<>();
 
-                // Update the bug in the database using your updateBugAssignedDeveloper method
-                updateBugAssignedDeveloper(bug.getBugId(), selectedTesterUserId);
-            }
-        }
-    }
+                    while (resultSet.next()) {
+                        int userId = resultSet.getInt("user_id");
+                        int bugCount = resultSet.getInt("bug_count");
 
-    private static List<Integer> findTestersWithLeastTasks(int projectId) {
-        List<Integer> testersWithLeastTasks = new ArrayList<>();
+                        if (bugCount < minTaskCount) {
+                            minTaskCount = bugCount;
+                            testersWithMinTasks.clear();
+                            testersWithMinTasks.add(userId);
+                        } else if (bugCount == minTaskCount) {
+                            testersWithMinTasks.add(userId);
+                        }
+                    }
 
-        String query = "SELECT u.user_id " +
-                "FROM public.users u " +
-                "JOIN public.project_user pu ON u.user_id = pu.user_id " +
-                "JOIN public.bug_user bu ON u.user_id = bu.user_id " +
-                "WHERE pu.project_id = ? AND u.role_id = ? " +
-                "GROUP BY u.user_id " +
-                "ORDER BY COUNT(bu.bug_id) ASC";
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, projectId);
-            statement.setInt(2, Roles.Tester.getRoleId()); // Replace with the actual tester role ID
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    testersWithLeastTasks.add(resultSet.getInt("user_id"));
+                    if (!testersWithMinTasks.isEmpty()) {
+                        // Choose a tester randomly from those with the minimum tasks
+                        int randomIndex = new Random().nextInt(testersWithMinTasks.size());
+                        return testersWithMinTasks.get(randomIndex);
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return testersWithLeastTasks;
+        // Return -1 when no testers are found
+        return -1;
     }
 
-    private static int chooseRandomTester(List<Integer> testers) {
-        Random random = new Random();
-        int randomIndex = random.nextInt(testers.size());
-        return testers.get(randomIndex);
-    }
-    public static boolean updateBugAssignedDeveloper(int bugId, int assignedDeveloperId) {
+
+    public static void updateBugAssignedUser(int bugId, int userId) {
         String query = "UPDATE public.bug_user SET user_id = ? WHERE bug_id = ?";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, assignedDeveloperId);
+            statement.setInt(1, userId);
             statement.setInt(2, bugId);
 
-            int rowsUpdated = statement.executeUpdate();
+            statement.executeUpdate();
 
-            return rowsUpdated > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
+
     public static Map<String, Integer> getPriorityCounts(int projectId) {
         Map<String, Integer> priorityCounts = new HashMap<>();
 
@@ -669,29 +569,28 @@ public class BugDAO {
 
         return severityCounts;
     }
-    public static int countBugsBySeverity(String severity) throws SQLException {
-        int count = 0;
 
-        String query = "SELECT COUNT(*) FROM public.bugs WHERE severity = ?";
+
+
+
+
+    public static void removeBugsFromUserInProject(User user, Project project) {
+        String query = "DELETE FROM public.bug_user WHERE user_id = ? AND bug_id IN " +
+                "(SELECT bug_id FROM public.bugs WHERE project_id = ?)";
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, severity);
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    count = resultSet.getInt(1);
-                }
-            }
+
+            // Set user and project IDs as parameters
+            statement.setInt(1, user.getUserId());
+            statement.setInt(2, project.getProjectId());
+
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
-
-        return count;
     }
-
-
-
-
-
 
 }
 

@@ -4,7 +4,6 @@ import com.example.bugtracker.Controller.Login.LoginController;
 import com.example.bugtracker.DBConnection.DBConnection;
 import com.example.bugtracker.Model.Entity.Roles;
 import com.example.bugtracker.Model.Entity.User;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -204,7 +203,7 @@ public class UserDAO {
         String query = "SELECT COUNT(DISTINCT project_user.project_id) AS active_projects " +
                 "FROM projects " +
                 "JOIN project_user ON projects.project_id = project_user.project_id " +
-                "WHERE project_user.user_id = ? AND projects.status = 'Active'";
+                "WHERE project_user.user_id = ? AND projects.status = 'In Progress'";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -237,7 +236,6 @@ public class UserDAO {
             if (resultSet.next()) {
                 numberOfUnresolvedBugs = resultSet.getInt("unresolved_bugs");
             }
-            System.out.println(loggedInUser.getUserId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

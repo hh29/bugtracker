@@ -99,6 +99,7 @@ public class DeveloperProjectDetailsController implements Initializable {
         // Initialize the TableView columns to map to the Bug class properties
         bugIDColumn.setCellValueFactory(data -> data.getValue().bugIdProperty().asObject());
         ticketColumn.setCellValueFactory(data -> data.getValue().bugTitleProperty());
+        priorityColumn.setCellValueFactory(data -> data.getValue().priorityProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
         assignedToColumn.setCellValueFactory(data -> {
             Bug bug = data.getValue();

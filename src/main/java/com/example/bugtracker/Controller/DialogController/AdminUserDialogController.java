@@ -1,6 +1,7 @@
 package com.example.bugtracker.Controller.DialogController;
 
 import com.example.bugtracker.Controller.Admin.AdminUsersController;
+import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
 import com.example.bugtracker.Model.DAO.UserDAO;
 import com.example.bugtracker.Model.Entity.Project;
@@ -55,7 +56,6 @@ public class AdminUserDialogController implements Initializable {
                 Roles.Tester
         );
         roleComboBox.setItems(roles);
-        assignedProjects.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
     }
 
@@ -69,6 +69,9 @@ public class AdminUserDialogController implements Initializable {
 
         // Set selection mode to MULTIPLE
         assignedProjects.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectedProjects.addAll(ProjectDAO.getProjectsForUser(selectedUser));
+
+
 
         assignedProjects.setCellFactory(projectListView -> new ListCell<Project>() {
             @Override
@@ -81,7 +84,8 @@ public class AdminUserDialogController implements Initializable {
                     CheckBox checkBox = createCheckBoxForProject(project);
 
                     // Set the checkbox state based on whether the project is assigned
-                    checkBox.setSelected(ProjectDAO.getProjectsForUser(selectedUser).contains(project));
+//                    checkBox.setSelected(ProjectDAO.getProjectsForUser(selectedUser).contains(project));
+                    checkBox.setSelected(selectedProjects.contains(project));
 
                     checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
                         if (newValue) {
@@ -89,9 +93,11 @@ public class AdminUserDialogController implements Initializable {
                         } else {
                             selectedProjects.remove(project); // Remove from selectedProjects
                         }
-                        System.out.println("Number of selected items: " + selectedProjects.size());
 
                     });
+
+
+
 
                     // Fill other user details
                     userNameLabel.setText(selectedUser.getUsername());
@@ -129,12 +135,12 @@ public class AdminUserDialogController implements Initializable {
 
         // Create a list to store projects to overwrite
         List<Project> projectsToOverwrite = new ArrayList<>();
+        boolean userIsProjectManager = ProjectDAO.isUserProjectManager(selectedUser);
+
 
 
         // Iterate through projects and check for overwrites
         for (Project project : selectedProjects) {
-            boolean userIsProjectManager = ProjectDAO.isUserProjectManager(selectedUser);
-
                 if (userIsProjectManager) {
 
                     // Check if the project already has a different project manager assigned
@@ -143,16 +149,18 @@ public class AdminUserDialogController implements Initializable {
                     }
                 }
             }
-        // Check if any initially checked box is unchecked
-        for (Project project : ProjectDAO.getProjectsForUser(selectedUser)) {
-            if (selectedProjects.contains(project) && !assignedProjects.getSelectionModel().getSelectedItems().contains(project)) {
-                // Display an alert if an initially checked box is unchecked
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Project Manager Cannot Be Null");
-                alert.setHeaderText(null);
-                alert.setContentText("The Project Manager for project '" + project.getProjectName() + "' cannot be made null.");
-                alert.showAndWait();
-                return; // Abort the operation
+        // Check if the project manager is being removed from any project
+        if (userIsProjectManager) {
+            for (Project project : assignedProjects.getItems()) {
+                if (!assignedProjects.getSelectionModel().getSelectedItems().contains(project)) {
+                    // Show an error message and return
+                    Alert managerNotNullAlert = new Alert(Alert.AlertType.ERROR);
+                    managerNotNullAlert.setTitle("Project Manager Error");
+                    managerNotNullAlert.setHeaderText(null);
+                    managerNotNullAlert.setContentText("The Project Manager for project '" + project.getProjectName() + "' cannot be made null. Please assign a new Project Manager.");
+                    managerNotNullAlert.showAndWait();
+                    return;
+                }
             }
         }
 
@@ -176,8 +184,6 @@ public class AdminUserDialogController implements Initializable {
                 for (Project project : projectsToOverwrite) {
                     // Update project associations and project manager field as needed
                     ProjectDAO.removeProjectFromUser(ProjectDAO.getProjectManagerForProject(project), project);
-                    ProjectDAO.addProjectToUser(selectedUser, project);
-                    ProjectDAO.updateProjectManager(project,selectedUser);
                 }
             }
             else {
@@ -210,19 +216,25 @@ public class AdminUserDialogController implements Initializable {
         }
 
 
-//        if (!selectedProjects.contains(se) && assignedProjects.getSelectionModel().getSelectedItems().contains(project)) {
-//            // The project was initially unchecked but is now checked
-//            // Create the project/user association here
-//            ProjectDAO.addProjectToUser(selectedUser, project);
-//        }
-//        else if (selectedProjects.contains(project) && !assignedProjects.getSelectionModel().getSelectedItems().contains(project)) {
-//            // The project was initially checked but is now unchecked
-//            // Remove the project/user association here
-//            ProjectDAO.removeProjectFromUser(selectedUser, project);
-//        }
+        // Add selected projects that are not in the user's current projects
+        for (Project project : selectedProjects) {
+            if (!ProjectDAO.getProjectsForUser(selectedUser).contains(project)) {
+                ProjectDAO.addProjectToUser(selectedUser, project);
+            }
+        }
+
+        // Remove unselected projects that are in the user's current projects
+        Set<Project> userProjects = new HashSet<>(ProjectDAO.getProjectsForUser(selectedUser));
+        for (Project project : userProjects) {
+            if (!selectedProjects.contains(project)) {
+                ProjectDAO.removeProjectFromUser(selectedUser, project);
+                BugDAO.removeBugsFromUserInProject(selectedUser, project); // Remove bugs associated with the removed project
+            }
+        }
 
 
-                // Update user details and assigned projects
+
+        // Update user details and assigned projects
         if (newRole == selectedUser.getRole()) {
             UserDAO.updateUser(selectedUser, newUsername, newFirstName, newLastName, newEmail, newDOB);
         } else {
@@ -237,6 +249,7 @@ public class AdminUserDialogController implements Initializable {
         successAlert.setContentText("User details updated successfully.");
         successAlert.showAndWait();
 
+        System.out.println(assignedProjects.getSelectionModel().getSelectedItems());
         closeDialog();
         // Refresh the AdminUsers page to reflect the changes
         if (adminUsersController != null) {
