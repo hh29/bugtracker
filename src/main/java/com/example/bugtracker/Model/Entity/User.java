@@ -8,11 +8,17 @@ import java.util.Objects;
 
 public class User {
 
+
     public String getFullName() {
         return fullName;
     }
 
     private String fullName;
+
+    public User(int userId) {
+        this.userId = userId;
+    }
+
     private int userId;
     private String username;
     private String password;

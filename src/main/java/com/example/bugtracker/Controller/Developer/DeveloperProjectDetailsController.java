@@ -205,6 +205,7 @@ public class DeveloperProjectDetailsController implements Initializable {
 
         BugDialogController controller = loader.getController();
         controller.initializeForEdit(bug);
+        controller.setProjectId(bug.getProjectId());
 
         dialogStage.showAndWait();
 

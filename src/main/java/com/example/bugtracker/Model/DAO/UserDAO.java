@@ -242,6 +242,28 @@ public class UserDAO {
 
         return numberOfUnresolvedBugs;
     }
+    public static void deleteBugsForUser(User user) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "DELETE FROM bug_user WHERE user_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, user.getUserId());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteProjectsForUser(User user) {
+        try (Connection connection = DBConnection.getConnection()) {
+            String query = "DELETE FROM project_user WHERE user_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, user.getUserId());
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

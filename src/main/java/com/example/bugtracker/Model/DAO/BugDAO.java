@@ -65,6 +65,7 @@ public class BugDAO {
                 bug.setUpdatedDate(updatedDate);
                 bug.setReporter(reporter);
                 bug.setSeverity(severity);
+                bug.setProjectId(projectId);
 
                 bugs.add(bug);
             }
@@ -460,7 +461,9 @@ public class BugDAO {
         return null; // Return null if no assigned developer is found
     }
 
-    public static int findTesterWithLeastTasks(int projectId) {
+    public static int findTesterWithLeastTasks(int projectId) throws SQLException {
+        int testerId = -1; // Initialize the result to -1
+
         try (Connection connection = DBConnection.getConnection()) {
             // Find testers within the same project and their task counts
             String query = "SELECT pu.user_id, COUNT(bu.bug_id) AS bug_count " +
@@ -476,18 +479,20 @@ public class BugDAO {
                 statement.setInt(1, projectId);
 
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    int minTaskCount = Integer.MAX_VALUE;
+                    int minBugCount = Integer.MAX_VALUE;
                     List<Integer> testersWithMinTasks = new ArrayList<>();
 
                     while (resultSet.next()) {
                         int userId = resultSet.getInt("user_id");
                         int bugCount = resultSet.getInt("bug_count");
 
-                        if (bugCount < minTaskCount) {
-                            minTaskCount = bugCount;
+                        if (bugCount < minBugCount) {
+                            minBugCount = bugCount;
                             testersWithMinTasks.clear();
                             testersWithMinTasks.add(userId);
-                        } else if (bugCount == minTaskCount) {
+                            System.out.println("User ID: " + userId + ", Bug Count: " + bugCount); // Print user_id and bug_count
+
+                        } else if (bugCount == minBugCount) {
                             testersWithMinTasks.add(userId);
                         }
                     }
@@ -495,34 +500,22 @@ public class BugDAO {
                     if (!testersWithMinTasks.isEmpty()) {
                         // Choose a tester randomly from those with the minimum tasks
                         int randomIndex = new Random().nextInt(testersWithMinTasks.size());
-                        return testersWithMinTasks.get(randomIndex);
+                        System.out.println(testersWithMinTasks);
+                        testerId = testersWithMinTasks.get(randomIndex); // Update the result
                     }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
         }
 
-        // Return -1 when no testers are found
-        return -1;
+        return testerId; // Return the result, which is -1 if no testers are found with minimum tasks
     }
 
 
-    public static void updateBugAssignedUser(int bugId, int userId) {
-        String query = "UPDATE public.bug_user SET user_id = ? WHERE bug_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setInt(1, userId);
-            statement.setInt(2, bugId);
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static Map<String, Integer> getPriorityCounts(int projectId) {
         Map<String, Integer> priorityCounts = new HashMap<>();
@@ -591,6 +584,23 @@ public class BugDAO {
             throw new RuntimeException(ex);
         }
     }
+    public static void updateBugAssignedUser(int bugId, int selectedTesterUserId) {
+        // Define the SQL query for updating the bug_user table
+        String updateQuery = "UPDATE bug_user SET user_id = ? WHERE bug_id = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+            preparedStatement.setInt(1, selectedTesterUserId); // Set the new user_id
+            preparedStatement.setInt(2, bugId); // Set the bug_id for the update
+
+            // Execute the update query
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
 

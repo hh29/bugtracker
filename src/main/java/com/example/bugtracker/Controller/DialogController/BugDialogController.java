@@ -4,6 +4,7 @@ import com.example.bugtracker.Model.DAO.UserDAO;
 import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Controller.Login.LoginController;
+import com.example.bugtracker.Model.Entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,10 +12,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static com.example.bugtracker.Controller.Login.LoginController.loggedInUser;
 import static com.example.bugtracker.Model.DAO.BugDAO.*;
 
 public class BugDialogController implements Initializable {
@@ -55,7 +58,7 @@ public class BugDialogController implements Initializable {
     }
 
     @FXML
-    private void handleOkButton(ActionEvent actionEvent) {
+    private void handleOkButton(ActionEvent actionEvent) throws SQLException {
 
         if (isValidInput()) {
             boolean hasChanges = true;
@@ -91,7 +94,7 @@ public class BugDialogController implements Initializable {
                     newBug.setSeverity(severityComboBox.getValue());
                     newBug.setEstimatedTimeToComplete(estimatedTime.getText());
 
-                    newBug.setReporterId(LoginController.loggedInUser.getUserId());
+                    newBug.setReporterId(loggedInUser.getUserId());
                     newBug.setProjectId(projectId);
 
                     // Set the created and updated dates to the current date and time
@@ -104,7 +107,7 @@ public class BugDialogController implements Initializable {
                     newBug.setBugId(bugId);
 
                     if ("Testing".equals(newBug.getStatus()) && showMoveToTestingConfirmation()) {
-                        // If the user confirms moving to testing, assign the bug to testers
+                        // If the user confirms moving to testing, assign the bug to tester
                         assignBugToTester(projectId, newBug.getBugId());
                     }
 
@@ -128,60 +131,75 @@ public class BugDialogController implements Initializable {
 
                     String newStatus = bug.getStatus();  // Get the new status
 
-                    // Debugging: Print the old and new status
-                    System.out.println("Old Status: " + oldStatus);
-                    System.out.println("New Status: " + newStatus);
-
                     // Check if the status has changed to "Testing"
                     if (!oldStatus.equals(newStatus) && "Testing".equals(newStatus)) {
-
-                        System.out.println("Status changed to 'Testing', checking for assigned tester...");
+                        boolean assignedTester = false;
 
                         if (getAssignedUser(bug.getBugId()) == null) {
                             // No assigned tester, assign the bug to a tester with the least tasks
                             boolean confirmed = showMoveToTestingConfirmation();
                             if (confirmed) {
-                                System.out.println("Handling No Assigned Tester Case...");
+                                assignedTester = handleNotAssignedCase(bug);
 
-                                handleNoAssignedTesterCase(bug);
+                                if (assignedTester) {
+                                    // Show success message for moving to testing
+                                    showAlert("Ticket Moved to Testing", "The ticket has been successfully moved to testing.");
+                                } else {
+                                    // Handle the case when no testers are available
+                                    showNoTestersAssignedAlert();
+                                }
                             } else {
                                 // User clicked "No," do not update the status
                                 return;
                             }
                         } else {
                             // Assigned tester exists, only show the confirmation when changing from another status to "Testing"
-                            System.out.println("Handling Assigned Tester Case...");
-
                             boolean confirmed = showMoveToTestingConfirmation();
                             if (confirmed) {
-                                handleAssignedTesterCase(bug);
-                            } else {
-                                // User clicked "No," do not update the status
-                                return;
+                                assignedTester = handleAssignedCase(bug);
+
+                                if (assignedTester) {
+                                    // Show success message for moving to testing
+                                    showAlert("Ticket Moved to Testing", "The ticket has been successfully moved to testing.");
+                                } else {
+                                    // Handle the case when no testers are available
+                                    showNoTestersAssignedAlert();
+                                }
                             }
+                        }
+
+
+                        // If no testers available, return to the dialog
+                        if (!assignedTester) {
+                            return;
                         }
                     }
 
-                    // Update the bug in the database using BugDAO
-                    boolean updateSuccessful = BugDAO.updateBug(bug);
-                        if (updateSuccessful) {
-                            showAlert("Ticket Updated", "The ticket has been successfully updated.");
-                        } else {
-                            showAlert("Update Failed", "Failed to update the ticket. Please try again.");
+                    // Check if the status has changed from "Testing" to another status
+                    if ("Testing".equals(oldStatus) && !oldStatus.equals(newStatus)) {
+                        // Logged-in user is a tester and changing status from "Testing" to another status
+                        boolean confirmed = showChangeStatusConfirmationAndUnassign(bug, newStatus);
+
+                        if (!confirmed) {
+                            // User clicked "No," do not update the status
+                            return;
                         }
                     }
+
+                    BugDAO.updateBug(bug);
+
+                    // Show success message for bug update
+                    showAlert("Ticket Updated", "The ticket has been successfully updated.");
 
 
                     okClicked = true;
-                    closeDialog();
-                } else{
-                    // No changes made, just close the dialog
                     closeDialog();
                 }
             } else {
                 showValidationAlert();
             }
         }
+    }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
@@ -204,8 +222,6 @@ public class BugDialogController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == yesButton;
     }
-
-
 
     @FXML
     private void handleCancelButton() {
@@ -258,27 +274,50 @@ public class BugDialogController implements Initializable {
         alert.setContentText("There are no testers assigned to this project. Please assign testers to the project before moving to testing.");
         alert.showAndWait();
     }
-    private void handleNoAssignedTesterCase(Bug bug) {
+    private boolean handleNotAssignedCase(Bug bug) throws SQLException {
         int selectedTesterUserId = findTesterWithLeastTasks(bug.getProjectId());
 
         if (selectedTesterUserId != -1) {
             assignBugToUser(bug.getBugId(), selectedTesterUserId);
+            return true; // Tester assigned, return true
         } else {
-            showNoTestersAssignedAlert();
+            return false; // No testers available
         }
     }
 
-    private void handleAssignedTesterCase(Bug bug) {
-          int selectedTesterUserId = findTesterWithLeastTasks(bug.getProjectId());
-            System.out.println(selectedTesterUserId);
-
+    private boolean handleAssignedCase(Bug bug) throws SQLException {
+        int selectedTesterUserId = findTesterWithLeastTasks(bug.getProjectId());
 
         if (selectedTesterUserId != -1) {
             updateBugAssignedUser(bug.getBugId(), selectedTesterUserId);
+            return true; // Tester assigned, return true
         } else {
-            showNoTestersAssignedAlert();
+            return false; // No testers available
         }
     }
+    private boolean showChangeStatusConfirmationAndUnassign(Bug bug, String newStatus) throws SQLException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Change Status Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to change the status from 'Testing' to '" + newStatus + "'?\n"
+                + "This will make the ticket unassigned.");
+
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == yesButton) {
+            // User confirmed the status change, unassign the bug
+            removeBugFromUser(bug,loggedInUser);
+            return true;
+        }
+
+        return false; // User clicked "No"
+    }
+
+
 
 
 }

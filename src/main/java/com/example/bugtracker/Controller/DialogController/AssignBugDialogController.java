@@ -167,6 +167,12 @@ public class AssignBugDialogController implements Initializable {
                     bug.setEstimatedTimeToComplete(estimatedTime.getText());
                     bug.setUpdatedDate(Date.valueOf(LocalDate.now()).toLocalDate());
 
+                    // Check if the status has changed to "Testing" and the user is not a tester
+                    if ("Testing".equals(bug.getStatus()) && !selectedUser.getRoleName().equals("Tester")) {
+                        showAlert("Error", "For a status with 'Testing', the ticket must be assigned to a tester.");
+                        return; // Don't proceed further
+                    }
+
                     BugDAO.updateBug(bug);
                 }
 

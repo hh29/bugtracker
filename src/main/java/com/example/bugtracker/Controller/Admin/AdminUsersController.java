@@ -178,7 +178,12 @@ public class AdminUsersController implements Initializable {
 
             Optional<ButtonType> result = confirmationAlert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Delete all associations with user
+                UserDAO.deleteBugsForUser(selectedUser);
+                UserDAO.deleteProjectsForUser(selectedUser);
                 UserDAO.deleteUser(selectedUser);
+
+
                 showAlert("User Deleted", "User has been successfully deleted.");
                 populateUsersTable();
             }

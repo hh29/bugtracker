@@ -268,7 +268,9 @@ public class DeveloperTicketsController implements Initializable {
 
         BugDialogController controller = loader.getController();
         controller.initializeForEdit(bug);
-
+        controller.setBug(bug);
+        controller.setProjectId(tableView.getSelectionModel().getSelectedItem().getProjectId());
+        System.out.println(bug.getProjectId());
         dialogStage.showAndWait();
 
         // After editing, refresh the bugs table
