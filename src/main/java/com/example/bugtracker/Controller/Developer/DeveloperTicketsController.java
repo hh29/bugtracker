@@ -20,10 +20,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import static com.example.bugtracker.Controller.Login.LoginController.loggedInUser;
 
 import javafx.stage.Modality;
@@ -216,21 +214,33 @@ public class DeveloperTicketsController implements Initializable {
         String selectedSortingCriteria = sortComboBox.getSelectionModel().getSelectedItem();
 
         if (selectedSortingCriteria != null) {
-            List<Bug> sortedBugs = tableView.getItems();
+            List<Bug> sortedBugs = new ArrayList<>(tableView.getItems());
 
             switch (selectedSortingCriteria) {
                 case "Project" ->
                     // Sort by Project
                         sortedBugs.sort(Comparator.comparing(Bug::getProjectName));
                 case "Severity" ->
-                    // Sort by Severity
-                        sortedBugs.sort(Comparator.comparing(Bug::getSeverity));
+                    // Sort by Severity (custom comparator)
+                        sortedBugs.sort((bug1, bug2) -> {
+                            // Define the custom sorting order for severity
+                            List<String> severityOrder = Arrays.asList("critical", "major", "minor");
+                            int index1 = severityOrder.indexOf(bug1.getSeverity().toLowerCase());
+                            int index2 = severityOrder.indexOf(bug2.getSeverity().toLowerCase());
+                            return Integer.compare(index1, index2);
+                        });
                 case "Priority" ->
-                    // Sort by Priority
-                        sortedBugs.sort(Comparator.comparing(Bug::getPriority));
+                    // Sort by Priority (custom comparator)
+                        sortedBugs.sort((bug1, bug2) -> {
+                            // Define the custom sorting order for priority
+                            List<String> priorityOrder = Arrays.asList("high", "medium", "low");
+                            int index1 = priorityOrder.indexOf(bug1.getPriority().toLowerCase());
+                            int index2 = priorityOrder.indexOf(bug2.getPriority().toLowerCase());
+                            return Integer.compare(index1, index2);
+                        });
                 default -> {
+                    // Handle other cases if needed
                 }
-                // Handle other cases if needed
             }
 
             // Update the TableView with the sorted data
@@ -240,6 +250,7 @@ public class DeveloperTicketsController implements Initializable {
             showAlert("Sorting Criteria Not Selected", "Please select a sorting criteria.");
         }
     }
+
 
     public void handleEditButton(ActionEvent actionEvent) {
         Bug selectedBug = tableView.getSelectionModel().getSelectedItem();

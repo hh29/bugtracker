@@ -124,7 +124,7 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="848.0" prefWidth="971.0">
                     <children>
-                        <Label layoutX="538.0" layoutY="56.0" prefHeight="54.0" prefWidth="134.0" text="My Tickets" textAlignment="CENTER" wrapText="true">
+                        <Label layoutX="586.0" layoutY="56.0" prefHeight="54.0" prefWidth="134.0" text="My Tickets" textAlignment="CENTER" wrapText="true">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="24.0" />
                             </font>
@@ -149,7 +149,10 @@
                                 <Image url="@../../../../images/icons8-edit-100.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="editButton" layoutX="1169.0" layoutY="135.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button" />
+                        <Button fx:id="editButton" layoutX="1169.0" layoutY="135.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                         <ImageView fitHeight="33.0" fitWidth="30.0" layoutX="1206.0" layoutY="134.0">
                             <image>
                                 <Image url="@../../../../images/icons8-delete-100.png" />
