@@ -316,8 +316,4 @@ public class BugDialogController implements Initializable {
 
         return false; // User clicked "No"
     }
-
-
-
-
 }

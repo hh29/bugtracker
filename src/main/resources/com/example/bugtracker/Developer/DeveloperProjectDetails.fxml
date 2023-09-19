@@ -102,6 +102,11 @@
                 </Pane>
                 <Pane prefHeight="0.0" prefWidth="145.0" />
                 <Pane prefHeight="423.0" prefWidth="172.0">
+                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-logout-100.png" />
+                        </image>
+                    </ImageView>
                     <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="379.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Logout">
                         <cursor>
                             <Cursor fx:constant="HAND" />
@@ -110,11 +115,6 @@
                             <Font name="Apple Braille" size="14.0" />
                         </font>
                     </Button>
-                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../../images/icons8-logout-100.png" />
-                        </image>
-                    </ImageView>
                 </Pane>
             </children>
         </VBox>
@@ -122,6 +122,29 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="848.0" prefWidth="1208.0">
                     <children>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1114.0" layoutY="129.0">
+                            <Image url="@../../../../images/icons8-add-50.png" />
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1162.0" layoutY="128.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-edit-100.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="6.0" layoutY="115.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-back-96.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1250.0" layoutY="129.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-chat-100.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1204.0" layoutY="128.0">
+                            <image>
+                                <Image url="@../../../../images/icons8-delete-100.png" />
+                            </image>
+                        </ImageView>
                         <Label layoutX="565.0" layoutY="55.0" prefHeight="54.0" prefWidth="172.0" text="Project Details" textAlignment="CENTER" wrapText="true">
                             <font>
                                 <Font name="Arial Rounded MT Bold" size="24.0" />
@@ -144,20 +167,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </TableView>
-                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1114.0" layoutY="129.0">
-                            <Image url="@../../../../images/icons8-add-50.png" />
-                        </ImageView>
-                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1162.0" layoutY="128.0">
-                            <image>
-                                <Image url="@../../../../images/icons8-edit-100.png" />
-                            </image>
-                        </ImageView>
                         <Button fx:id="editButton" layoutX="1162.0" layoutY="126.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button" />
-                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1204.0" layoutY="128.0">
-                            <image>
-                                <Image url="@../../../../images/icons8-delete-100.png" />
-                            </image>
-                        </ImageView>
                         <Button fx:id="deleteButton" layoutX="1204.0" layoutY="126.0" onAction="#handleDeleteButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
@@ -170,20 +180,10 @@
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor></Button>
-                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="1250.0" layoutY="129.0">
-                            <image>
-                                <Image url="@../../../../images/icons8-chat-100.png" />
-                            </image>
-                        </ImageView>
                         <Button fx:id="backButton" layoutX="-1.0" layoutY="112.0" onAction="#backButton" prefHeight="38.0" prefWidth="44.0" style="-fx-background-color: transparent;" styleClass="image-button">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor></Button>
-                        <ImageView fitHeight="31.0" fitWidth="30.0" layoutX="6.0" layoutY="115.0">
-                            <image>
-                                <Image url="@../../../../images/icons8-back-96.png" />
-                            </image>
-                        </ImageView>
 
                     </children>
 

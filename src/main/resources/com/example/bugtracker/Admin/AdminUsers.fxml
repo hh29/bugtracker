@@ -35,6 +35,11 @@
                 </Pane>
                 <Pane>
                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="14.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-dashboard-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="dashboardButton" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Dashboard">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -43,15 +48,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="20.0" fitWidth="14.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-dashboard-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="57.0" prefWidth="126.0">
                     <children>
+                        <ImageView fitHeight="26.0" fitWidth="16.0" layoutX="23.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-projects-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="projectsButton" layoutY="2.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Projects">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -60,15 +65,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="26.0" fitWidth="16.0" layoutX="23.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-projects-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="57.0" prefWidth="136.0">
                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="16.0" layoutX="25.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-users-60.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="usersButton" layoutX="-1.0" layoutY="1.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="Users">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -77,11 +82,6 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="25.0" fitWidth="16.0" layoutX="25.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-users-60.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="56.0" prefWidth="140.0">
@@ -103,6 +103,11 @@
                 </Pane>
                 <Pane prefHeight="0.0" prefWidth="145.0" />
                 <Pane prefHeight="423.0" prefWidth="172.0">
+                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-logout-100.png" />
+                        </image>
+                    </ImageView>
                     <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="379.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Logout">
                         <cursor>
                             <Cursor fx:constant="HAND" />
@@ -111,11 +116,6 @@
                             <Font name="Apple Braille" size="14.0" />
                         </font>
                     </Button>
-                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../../images/icons8-logout-100.png" />
-                        </image>
-                    </ImageView>
                 </Pane>
             </children>
         </VBox>
@@ -125,6 +125,16 @@
                     <children>
                         <AnchorPane layoutX="1.0" prefHeight="808.0" prefWidth="1302.0">
                             <children>
+                        <ImageView fitHeight="44.0" fitWidth="44.0" layoutX="478.0" layoutY="733.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../images/icons8-delete-100.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="38.0" fitWidth="62.0" layoutX="425.0" layoutY="736.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../images/icons8-edit-100.png" />
+                           </image>
+                        </ImageView>
                                 <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
                                 <Label layoutX="406.0" layoutY="56.0" prefHeight="54.0" prefWidth="172.0" text="Users" textAlignment="CENTER" wrapText="true">
                                     <font>
@@ -184,12 +194,12 @@
                               <TableColumn fx:id="statusColumn" prefWidth="193.0" text="Status" />
                           </columns>
                         </TableView>
-                                <Button fx:id="editButton" layoutX="400.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #FFA500;" text="EDIT" textFill="WHITE">
+                                <Button fx:id="editButton" layoutX="422.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleEditButton" prefHeight="38.0" prefWidth="44.0" style="-fx-background-color: transparent;" textFill="WHITE">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="deleteButton" layoutX="495.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #FF3333;" text="DELETE" textFill="WHITE">
+                                <Button fx:id="deleteButton" layoutX="478.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="38.0" prefWidth="44.0" style="-fx-background-color: transparent;" textFill="WHITE">
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>

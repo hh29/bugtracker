@@ -5,7 +5,6 @@ import com.example.bugtracker.Controller.Chat.ChatController;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
 import com.example.bugtracker.Model.Entity.Project;
 import com.example.bugtracker.Controller.DialogController.ProjectDialogController;
-import com.example.bugtracker.Controller.TechSupport.TechSupportDetailsController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,7 +73,7 @@ public class AdminProjectsController implements Initializable {
         ButtonHandler dashboardButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminDashboard.fxml");
         ButtonHandler usersButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminUsers.fxml");
         ButtonHandler projectsButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminProjects.fxml");
-        ButtonHandler settingsButtonHandler = new ButtonHandler("/com/example/bugtracker/AdminSettings.fxml");
+        ButtonHandler settingsButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminSettings.fxml");
         ButtonHandler logoutButtonHandler = new ButtonHandler("/com/example/bugtracker/Login/Login.fxml");
 
 

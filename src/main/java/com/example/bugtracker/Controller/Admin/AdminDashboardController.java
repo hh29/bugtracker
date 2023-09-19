@@ -2,25 +2,18 @@ package com.example.bugtracker.Controller.Admin;
 
 import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
 import com.example.bugtracker.Model.DAO.BugDAO;
-import com.example.bugtracker.Model.Entity.Bug;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 
 
 import java.net.URL;
 
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class AdminDashboardController implements Initializable {
     @FXML
@@ -48,7 +41,7 @@ public class AdminDashboardController implements Initializable {
         ButtonHandler dashboardButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminDashboard.fxml");
         ButtonHandler usersButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminUsers.fxml");
         ButtonHandler projectsButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminProjects.fxml");
-        ButtonHandler settingsButtonHandler = new ButtonHandler("/com/example/bugtracker/AdminSettings.fxml");
+        ButtonHandler settingsButtonHandler = new ButtonHandler("/com/example/bugtracker/Admin/AdminSettings.fxml");
         ButtonHandler logoutButtonHandler = new ButtonHandler("/com/example/bugtracker/Login/Login.fxml");
 
 

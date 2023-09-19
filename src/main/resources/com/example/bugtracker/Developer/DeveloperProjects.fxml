@@ -34,6 +34,11 @@
                 </Pane>
                 <Pane>
                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="14.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-dashboard-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="dashboardButton" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Dashboard">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -42,15 +47,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="20.0" fitWidth="14.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-dashboard-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="57.0" prefWidth="126.0">
                     <children>
+                        <ImageView fitHeight="20.0" fitWidth="16.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-tickets-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="ticketsButton" layoutX="-2.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="Tickets">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -59,15 +64,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="20.0" fitWidth="16.0" layoutX="22.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-tickets-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="57.0" prefWidth="136.0">
                     <children>
+                        <ImageView fitHeight="26.0" fitWidth="16.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-projects-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="projectsButton" layoutX="2.0" layoutY="3.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: transparent;" text="Projects">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -76,15 +81,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="26.0" fitWidth="16.0" layoutX="23.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-projects-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="56.0" prefWidth="140.0">
                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="23.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../images/icons8-settings-50.png" />
+                            </image>
+                        </ImageView>
                         <Button fx:id="settingsButton" layoutX="4.0" layoutY="3.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="145.0" style="-fx-background-color: transparent;" text="Settings">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
@@ -93,15 +98,15 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="23.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../../images/icons8-settings-50.png" />
-                            </image>
-                        </ImageView>
                     </children>
                 </Pane>
                 <Pane prefHeight="0.0" prefWidth="145.0" />
                 <Pane prefHeight="423.0" prefWidth="172.0">
+                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../../images/icons8-logout-100.png" />
+                        </image>
+                    </ImageView>
                     <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="379.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" style="-fx-background-color: transparent;" text="Logout">
                         <cursor>
                             <Cursor fx:constant="HAND" />
@@ -110,11 +115,6 @@
                             <Font name="Apple Braille" size="14.0" />
                         </font>
                     </Button>
-                    <ImageView fitHeight="32.0" fitWidth="26.0" layoutX="29.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@../../../../images/icons8-logout-100.png" />
-                        </image>
-                    </ImageView>
                 </Pane>
 
             </children>
