@@ -46,10 +46,10 @@ public class CommentDAO {
         List<Comment> comments = new ArrayList<>();
 
         String query = "SELECT c.comment_id, c.project_id, c.user_id, c.comment_text, c.comment_date, " +
-                "u.first_name, u.last_name, a.attachment_id, a.file_name, a.file_size, r.role_title " +
+                "u.first_name, u.last_name, r.role_title " +
                 "FROM public.project_comments c " +
                 "JOIN public.users u ON c.user_id = u.user_id " +
-                "LEFT JOIN public.project_comment_attachments a ON c.comment_id = a.comment_id " +
+                " " +
                 "LEFT JOIN public.user_roles ur ON c.user_id = ur.user_id " +
                 "LEFT JOIN public.roles r ON ur.role_id = r.role_id " +
                 "WHERE c.project_id = ?";
@@ -90,10 +90,9 @@ public class CommentDAO {
         List<Comment> comments = new ArrayList<>();
 
         String query = "SELECT c.comment_id, c.bug_id, c.user_id, c.comment_text, c.comment_date, " +
-                "u.first_name, u.last_name, a.attachment_id, a.file_name, a.file_size, r.role_title " +
+                "u.first_name, u.last_name, r.role_title " +
                 "FROM public.bug_comments c " +
                 "JOIN public.users u ON c.user_id = u.user_id " +
-                "LEFT JOIN public.bug_comment_attachments a ON c.comment_id = a.comment_id " +
                 "LEFT JOIN public.user_roles ur ON c.user_id = ur.user_id " +
                 "LEFT JOIN public.roles r ON ur.role_id = r.role_id " +
                 "WHERE c.bug_id = ?";
