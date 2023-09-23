@@ -126,7 +126,7 @@
                         <AnchorPane layoutX="1.0" prefHeight="848.0" prefWidth="1302.0">
                             <children>
                                 <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
-                                <Label layoutX="402.0" layoutY="56.0" prefHeight="54.0" prefWidth="172.0" text="Projects" textAlignment="CENTER" wrapText="true">
+                                <Label layoutX="675.0" layoutY="64.0" prefHeight="54.0" prefWidth="172.0" text="Projects" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="24.0" />
                                     </font>
@@ -134,13 +134,12 @@
                                 <TableView fx:id="projectTable" layoutX="1.0" layoutY="169.0" prefHeight="631.0" prefWidth="1292.0" style="-fx-background-color: transparent;">
                                     <columns>
                                         <TableColumn fx:id="projectIdColumn" prefWidth="45.0" text="ID" />
-                                        <TableColumn fx:id="projectNameColumn" prefWidth="123.0" text="Project Name" />
-                                        <TableColumn fx:id="descriptionColumn" prefWidth="383.0" text="Description" />
-                                        <TableColumn fx:id="statusColumn" prefWidth="142.0" text="Status" />
-                                        <TableColumn fx:id="priorityColumn" prefWidth="133.0" text="Priority" />
-                                        <TableColumn fx:id="deadlineColumn" prefWidth="128.0" text="Deadline" />
-                                        <TableColumn fx:id="projectManagerColumn" prefWidth="203.0" text="Project Manager" />
-                                        <TableColumn fx:id="actionsColumn" prefWidth="133.0" text="Actions" />
+                                        <TableColumn fx:id="projectNameColumn" prefWidth="215.0" text="Project Name" />
+                                        <TableColumn fx:id="descriptionColumn" prefWidth="459.5" text="Description" />
+                                        <TableColumn fx:id="statusColumn" prefWidth="143.0" text="Status" />
+                                        <TableColumn fx:id="priorityColumn" prefWidth="125.5" text="Priority" />
+                                        <TableColumn fx:id="deadlineColumn" prefWidth="133.0" text="Deadline" />
+                                        <TableColumn fx:id="projectManagerColumn" prefWidth="172.1578369140625" text="Project Manager" />
                                     </columns>
                                 </TableView>
                                 <TextField fx:id="searchBar" layoutX="14.0" layoutY="131.0" prefHeight="28.0" prefWidth="227.0" promptText="Search for a project..." style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />

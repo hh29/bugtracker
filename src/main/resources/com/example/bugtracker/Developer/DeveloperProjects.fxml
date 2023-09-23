@@ -131,13 +131,12 @@
                         <Pane layoutX="-19.0" layoutY="109.0" opacity="0.5" prefHeight="5.0" prefWidth="725.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-19.0" AnchorPane.rightAnchor="-1.0" />
                         <TableView fx:id="tableView" layoutX="8.0" layoutY="138.0" prefHeight="335.0" prefWidth="1277.0" style="-fx-padding: 0px 0px 2px 0px; -fx-background-color: transparent;">
                             <columns>
-                                <TableColumn fx:id="projectColumn" prefWidth="139.0" style="-fx-background-color: transparent;" text="Project" />
-                                <TableColumn fx:id="descriptionColumn" prefWidth="377.0" style="fx-background-color: transparent;" text="Description" />
-                                <TableColumn fx:id="projectManagerColumn" prefWidth="186.0" style="fx-background-color: transparent;" text="Project Manager" />
-                                <TableColumn fx:id="deadlineColumn" minWidth="0.0" prefWidth="112.0" style="fx-background-color: transparent;" text="Deadline" />
-                                <TableColumn fx:id="statusColumn" prefWidth="149.0" style="fx-border-width: transparent;" text="Status" />
-                        <TableColumn fx:id="priorityColumn" prefWidth="154.0" style="fx-border-width: transparent;" text="Priority" />
-                        <TableColumn fx:id="actionsColumn" minWidth="0.0" prefWidth="158.0" style="fx-border-width: transparent;" text="Actions" />
+                                <TableColumn fx:id="projectColumn" prefWidth="199.0" style="-fx-background-color: transparent;" text="Project" />
+                                <TableColumn fx:id="descriptionColumn" prefWidth="364.0" style="fx-background-color: transparent;" text="Description" />
+                                <TableColumn fx:id="projectManagerColumn" prefWidth="298.0" style="fx-background-color: transparent;" text="Project Manager" />
+                                <TableColumn fx:id="deadlineColumn" minWidth="0.0" prefWidth="141.0" style="fx-background-color: transparent;" text="Deadline" />
+                                <TableColumn fx:id="statusColumn" prefWidth="131.0" style="fx-border-width: transparent;" text="Status" />
+                        <TableColumn fx:id="priorityColumn" prefWidth="144.0" style="fx-border-width: transparent;" text="Priority" />
                             </columns>
                             <cursor>
                                 <Cursor fx:constant="HAND" />

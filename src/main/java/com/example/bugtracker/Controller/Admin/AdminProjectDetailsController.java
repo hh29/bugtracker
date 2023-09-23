@@ -3,6 +3,7 @@ package com.example.bugtracker.Controller.Admin;
 import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
 import com.example.bugtracker.Controller.Chat.ChatController;
 import com.example.bugtracker.Controller.DialogController.AssignBugDialogController;
+import com.example.bugtracker.Controller.DialogController.BugDialogController;
 import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Model.Entity.Project;
@@ -34,6 +35,7 @@ public class AdminProjectDetailsController implements Initializable {
     public Button editButton;
     public Button addButton;
     public Button backButton;
+    public Button chatButton;
     Project selectedProject;
     @FXML
     private TableView<Bug> tableView;
@@ -224,9 +226,9 @@ public class AdminProjectDetailsController implements Initializable {
         populateBugsTableForSelectedProject();
     }
 
-    public void handleAddButton(ActionEvent actionEvent) throws SQLException {
+    public void handleAddButton(ActionEvent actionEvent) {
         // Load the BugDialogController FXML and create a new stage
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bugtracker/Dialog/AssignBugDialog.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bugtracker/Dialog/BugDialog.fxml"));
         Parent root;
         try {
             root = loader.load();
@@ -243,9 +245,8 @@ public class AdminProjectDetailsController implements Initializable {
         dialogStage.setScene(scene);
 
         // Set up the BugDialogController
-        AssignBugDialogController controller = loader.getController();
-
-        controller.setProject(selectedProject);
+        BugDialogController controller = loader.getController();
+        controller.setProjectId(selectedProject.getProjectId());
 
         dialogStage.showAndWait();
 
@@ -256,13 +257,12 @@ public class AdminProjectDetailsController implements Initializable {
                 // Insert the new bug into the database using your BugDAO
                 BugDAO.insertBug(newBug);
 
-
                 // Show a success message
                 showAlert("Ticket Inserted", "New ticket has been successfully inserted.");
+
             }
-            // Refresh the bugs table
-            populateBugsTableForSelectedProject();
         }
+        populateBugsTableForSelectedProject();
     }
 
     public void backButton(ActionEvent actionEvent) {
@@ -282,6 +282,14 @@ public class AdminProjectDetailsController implements Initializable {
     }
 
     public void handleChatButton(ActionEvent actionEvent) {
+        Bug bug = tableView.getSelectionModel().getSelectedItem(); // Assuming tableView is your project table view
+
+        if (bug != null) {
+            openChatLobby(bug);
+        } else {
+            showAlert("No ticket selected","Please select a project before opening the chat lobby.");
+        }
 
     }
+
 }

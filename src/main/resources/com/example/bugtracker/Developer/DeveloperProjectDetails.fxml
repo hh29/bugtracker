@@ -167,7 +167,10 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </TableView>
-                        <Button fx:id="editButton" layoutX="1162.0" layoutY="126.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button" />
+                        <Button fx:id="editButton" layoutX="1162.0" layoutY="126.0" onAction="#handleEditButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                         <Button fx:id="deleteButton" layoutX="1204.0" layoutY="126.0" onAction="#handleDeleteButton" prefHeight="38.0" prefWidth="30.0" style="-fx-background-color: transparent;" styleClass="image-button">
                             <cursor>
                                 <Cursor fx:constant="HAND" />

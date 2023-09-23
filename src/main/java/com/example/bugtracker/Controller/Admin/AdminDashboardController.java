@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static com.example.bugtracker.Controller.Login.LoginController.loggedInUser;
+
 public class AdminDashboardController implements Initializable {
     @FXML
     public Button projectsButton;
@@ -27,11 +29,13 @@ public class AdminDashboardController implements Initializable {
     @FXML
     public Button logoutButton;
     @FXML
-    private Label activeProjectsLabel;
-    @FXML
-    private Label unresolvedBugsLabel;
-    @FXML
     private LineChart<String, Number> bugsTimeChart;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label userIdLabel;
 
 
 
@@ -51,6 +55,10 @@ public class AdminDashboardController implements Initializable {
         projectsButton.setOnAction(projectsButtonHandler);
         settingsButton.setOnAction(settingsButtonHandler);
         logoutButton.setOnAction(logoutButtonHandler);
+
+        usernameLabel.setText(loggedInUser.getUsername());
+        userIdLabel.setText(String.valueOf(loggedInUser.getUserId()));
+        nameLabel.setText(loggedInUser.getFullName());
 
 
         configureBugCountChart();

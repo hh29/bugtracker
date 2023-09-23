@@ -40,7 +40,7 @@
                                 <Image url="@../../../images/icons8-dashboard-50.png" />
                             </image>
                         </ImageView>
-                        <Button fx:id="techSupportButton" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="157.0" style="-fx-background-color: transparent;" text="Tech Support">
+                        <Button fx:id="techSupportButton" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="157.0" style="-fx-background-color: transparent;" text="Tech Support">
                             <font>
                                 <Font name="Apple Braille" size="14.0" />
                             </font>
@@ -93,27 +93,45 @@
                         <AnchorPane layoutX="1.0" prefHeight="848.0" prefWidth="1304.0">
                             <children>
                                 <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
-                                <Label layoutX="610.0" layoutY="58.0" prefHeight="54.0" prefWidth="172.0" text="Tech Support" textAlignment="CENTER" wrapText="true">
+                                <Label layoutX="610.0" layoutY="58.0" prefHeight="54.0" prefWidth="172.0" text="DASHBOARD" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="24.0" />
                                     </font>
                                 </Label>
-                        <TableView fx:id="projectTable" layoutX="1.0" layoutY="169.0" prefHeight="560.0" prefWidth="1286.0" style="-fx-background-color: transparent;">
+                        <TableView fx:id="projectTable" layoutX="4.0" layoutY="307.0" prefHeight="387.0" prefWidth="1291.0" style="-fx-background-color: transparent;">
                           <columns>
-                            <TableColumn fx:id="projectIdColumn" prefWidth="45.0" text="ID" />
-                            <TableColumn fx:id="projectNameColumn" prefWidth="123.0" text="Project Name" />
-                              <TableColumn fx:id="descriptionColumn" prefWidth="362.0" text="Description" />
-                              <TableColumn fx:id="statusColumn" prefWidth="157.0" text="Status" />
-                              <TableColumn fx:id="priorityColumn" prefWidth="158.0" text="Priority" />
-                              <TableColumn fx:id="deadlineColumn" prefWidth="137.0" text="Deadline" />
-                              <TableColumn fx:id="projectManagerColumn" prefWidth="168.0" text="Project Manager" />
-                              <TableColumn fx:id="actionsColumn" prefWidth="141.0" text="Actions" />
+                            <TableColumn fx:id="projectIdColumn" prefWidth="39.0" text="ID" />
+                            <TableColumn fx:id="projectNameColumn" prefWidth="188.0" text="Project Name" />
+                              <TableColumn fx:id="descriptionColumn" prefWidth="401.0" text="Description" />
+                              <TableColumn fx:id="statusColumn" prefWidth="156.0" text="Status" />
+                              <TableColumn fx:id="priorityColumn" prefWidth="147.0" text="Priority" />
+                              <TableColumn fx:id="deadlineColumn" prefWidth="133.0" text="Deadline" />
+                              <TableColumn fx:id="projectManagerColumn" prefWidth="226.0" text="Project Manager" />
                           </columns>
                         </TableView>
-                                <TextField fx:id="searchBar" layoutX="1041.0" layoutY="128.0" prefHeight="28.0" prefWidth="227.0" promptText="Search for a project..." style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                                <TextField fx:id="searchBar" layoutX="1049.0" layoutY="266.0" prefHeight="28.0" prefWidth="227.0" promptText="Search for a project..." style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
                             </children>
 
                         </AnchorPane>
+                        <Pane layoutX="14.0" layoutY="122.0" prefHeight="134.0" prefWidth="1283.0" style="-fx-background-color: #FAF9F6;;">
+                            <children>
+                                <Label layoutX="610.0" layoutY="-2.0" text="Tech Support">
+                                    <font>
+                                        <Font size="23.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="nameLabel" alignment="CENTER" layoutX="580.0" layoutY="55.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                                <Label layoutX="534.0" layoutY="69.0" text="Name :" />
+                                <Label fx:id="usernameLabel" alignment="CENTER" layoutX="580.0" layoutY="86.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                                <Label layoutX="515.0" layoutY="99.0" text="Username :" />
+                                <Label layoutX="527.0" layoutY="39.0" text="User ID : " />
+                                <Label fx:id="userIdLabel" alignment="CENTER" layoutX="580.0" layoutY="24.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                        <ImageView fitHeight="85.0" fitWidth="81.0" layoutX="385.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/icons8-online-support-100.png" />
+                           </image>
+                        </ImageView>
+                            </children></Pane>
                     </children>
                 </Pane>
             </items>

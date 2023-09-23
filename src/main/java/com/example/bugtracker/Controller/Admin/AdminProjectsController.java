@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -91,6 +92,37 @@ public class AdminProjectsController implements Initializable {
 
         projectIdColumn.setCellValueFactory(new PropertyValueFactory<>("projectId"));
         projectNameColumn.setCellValueFactory(new PropertyValueFactory<>("projectName"));
+        projectNameColumn.setCellFactory(col -> {
+            TableCell<Project, String> cell = new TableCell<Project, String>() {
+                final Hyperlink hyperlink = new Hyperlink();
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        // Set the project name as the hyperlink text
+                        hyperlink.setText(item);
+                        setGraphic(hyperlink);
+
+                        // Define the action to perform when the hyperlink is clicked
+                        hyperlink.setOnAction(event -> {
+                            Project project = getTableView().getItems().get(getIndex());
+                            // Navigate to the project details page with the selected project
+                            openBugsForProject (project);
+                        });
+                    }
+                }
+            };
+            return cell;
+        });
+
+
+
+
+
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
         projectManagerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
@@ -98,28 +130,6 @@ public class AdminProjectsController implements Initializable {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("projectDescription"));
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
-        actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Hyperlink hyperlink = new Hyperlink("View Bugs");
-
-            {
-                hyperlink.setOnAction(event -> {
-                    Project project = getTableRow().getItem();
-                    if (project != null) {
-                        openBugsForProject(project);
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Hyperlink item, boolean empty) {
-                super.updateItem(item, empty);
-                if (!empty) {
-                    setGraphic(hyperlink);
-                } else {
-                    setGraphic(null);
-                }
-            }
-        });
         fillProjectTable();
     }
     private void openBugsForProject(Project project) {

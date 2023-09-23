@@ -124,50 +124,62 @@
                   <AnchorPane layoutX="1.0" prefHeight="880.0" prefWidth="1273.0">
                      <children>
                         <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
-                        <Pane layoutX="33.0" layoutY="125.0" prefHeight="300.0" prefWidth="350.0" style="-fx-background-color: #FAF9F6;">
+                        <Pane layoutX="33.0" layoutY="125.0" prefHeight="300.0" prefWidth="1193.0" style="-fx-background-color: #FAF9F6;">
                            <children>
-            
-                              <Label alignment="CENTER" layoutX="5.0" layoutY="6.0" prefHeight="26.0" prefWidth="350.0" text=" Active Projects">
+                              <Label fx:id="roleLabel" alignment="CENTER" layoutX="535.0" layoutY="-7.0" prefHeight="55.0" prefWidth="239.0" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Al Bayan Plain" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="nameLabel" alignment="CENTER" layoutX="548.0" layoutY="95.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                              <Label layoutX="502.0" layoutY="109.0" text="Name :" />
+                              <Label fx:id="usernameLabel" alignment="CENTER" layoutX="548.0" layoutY="135.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                              <Label layoutX="483.0" layoutY="148.0" text="Username :" />
+                              <Pane layoutX="8.0" layoutY="186.0" prefHeight="4.0" prefWidth="1171.0" style="-fx-border-color: #E1D9D1; -fx-border-width: 2px 0px 0px 0px;" />
+                              <Label layoutX="495.0" layoutY="70.0" text="User ID : " />
+                              <Label fx:id="userIdLabel" alignment="CENTER" layoutX="548.0" layoutY="55.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                              <Label layoutX="513.0" layoutY="202.0" text="ASSIGNED PROJECTS :">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="activeProjectsLabel" alignment="CENTER" layoutX="603.0" layoutY="198.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" text="3">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="activeProjectsLabel" alignment="CENTER" layoutX="121.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="168.0" prefWidth="119.0">
+                              <Label layoutX="523.0" layoutY="236.0" text="UNRESOLVED BUGS :">
                                  <font>
-                                    <Font size="65.0" />
+                                    <Font size="18.0" />
                                  </font>
                               </Label>
-                           </children>
-                        </Pane>
-                        <Pane layoutX="456.0" layoutY="125.0" minHeight="300.0" minWidth="350.0" style="-fx-background-color: #FAF9F6;">
-                           <children>
-                              <Label alignment="CENTER" layoutX="2.0" layoutY="6.0" prefHeight="26.0" prefWidth="350.0" text=" Unresolved Bugs">
+                              <Label fx:id="unresolvedBugsLabel" alignment="CENTER" layoutX="603.0" layoutY="234.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" text="6">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="493.0" layoutY="270.0" text="PROJECTS COMPLETED :">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="projectsCompletedLabel" alignment="CENTER" layoutX="604.0" layoutY="267.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" text="5">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="unresolvedBugsLabel" alignment="CENTER" layoutX="132.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="102.0">
-                                 <font>
-                                    <Font name="System Bold" size="65.0" />
-                                 </font>
-                              </Label>
+                              <ImageView fitHeight="114.0" fitWidth="114.0" layoutX="140.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../images/icons8-developer-100.png" />
+                                 </image></ImageView>
+                              <ImageView fitHeight="95.0" fitWidth="104.0" layoutX="150.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../images/icons8-statistics-100.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </Pane>
-                        <Pane layoutX="876.0" layoutY="125.0" minHeight="300.0" minWidth="350.0" style="-fx-background-color: #FAF9F6;">
-                           <children>
-                              <Label alignment="CENTER" layoutX="5.0" layoutY="6.0" prefHeight="26.0" prefWidth="350.0" text="Projects Completed">
-                                 <font>
-                                    <Font size="20" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="projectsCompletedLabel" layoutX="160.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="141.0" prefWidth="84.0">
-                                 <font>
-                                    <Font size="65.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
-                        <Label layoutX="542.0" layoutY="56.0" prefHeight="54.0" prefWidth="172.0" text="DASHBOARD" textAlignment="CENTER" wrapText="true">
+                        <Label layoutX="612.0" layoutY="55.0" prefHeight="54.0" prefWidth="172.0" text="DASHBOARD" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="24.0" />
                            </font>
@@ -175,6 +187,8 @@
                         <PieChart fx:id="bugPriorityPieChart" layoutX="32.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" style="-fx-background-color: #FAF9F6;" title="Priority" />
                         <PieChart fx:id="severityPieChart" layoutX="876.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" style="-fx-background-color: #FAF9F6;" title="Severity" />
                         <PieChart fx:id="unresolvedBugsPieChart" layoutX="452.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" style="-fx-background-color: #FAF9F6;" title="Status" />
+
+
                      </children>
       
                   </AnchorPane>

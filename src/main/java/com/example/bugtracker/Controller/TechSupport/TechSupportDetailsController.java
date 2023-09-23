@@ -30,9 +30,14 @@ import static com.example.bugtracker.Controller.Login.LoginController.loggedInUs
 
 public class TechSupportDetailsController implements Initializable {
     
-    public Button backButton;
-    public Button addButton;
-    public Button editButton;
+    @FXML
+    private Button backButton;
+   @FXML
+   private Button addButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button chatButton;
     Project selectedProject;
     @FXML
     private TableView<Bug> tableView;
@@ -234,10 +239,11 @@ public class TechSupportDetailsController implements Initializable {
 
                 // Show a success message
                 showAlert("Ticket Inserted", "New ticket has been successfully inserted.");
+                dialogStage.close();
             }
-            // Refresh the bugs table
-            populateBugsTableForSelectedProject();
         }
+        // Refresh the bugs table
+        populateBugsTableForSelectedProject();
     }
 
     public void backButton(ActionEvent actionEvent) {
@@ -254,5 +260,41 @@ public class TechSupportDetailsController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void handleChatButton(ActionEvent actionEvent) {
+        Bug bug = tableView.getSelectionModel().getSelectedItem(); // Assuming tableView is your project table view
+
+        if (bug != null) {
+            openChatLobby(bug);
+        } else {
+            showAlert("No ticket selected","Please select a project before opening the chat lobby.");
+        }
+
+    }
+    @FXML
+    private void handleDeleteButton(ActionEvent event) {
+        Bug selectedBug = tableView.getSelectionModel().getSelectedItem();
+        if (selectedBug != null) {
+            boolean confirmDelete = showConfirmationDialog("Delete Bug",
+                    "Are you sure you want to delete this bug?");
+            if (confirmDelete) {
+                // Delete the bug from your data source (e.g., database or list)
+                // For example, if you're using a list:
+                tableView.getItems().remove(selectedBug);
+                BugDAO.deleteBug(selectedBug);
+            }
+        } else {
+            showAlert("No Bug Selected", "Please select a bug to delete.");
+        }
+    }
+    private boolean showConfirmationDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
     }
 }

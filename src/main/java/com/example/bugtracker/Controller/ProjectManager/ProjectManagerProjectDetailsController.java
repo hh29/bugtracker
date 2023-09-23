@@ -258,10 +258,11 @@ public class ProjectManagerProjectDetailsController implements Initializable {
                 // Show a success message
                 showAlert("Ticket Inserted", "New ticket has been successfully inserted.");
                 // Refresh the bugs table
-                populateBugsTableForSelectedProject();
+
             }
 
         }
+        populateBugsTableForSelectedProject();
     }
 
     public void backButton(ActionEvent actionEvent) {

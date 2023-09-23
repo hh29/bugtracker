@@ -50,10 +50,11 @@ public class ProjectManagerDashboardController implements Initializable {
     @FXML
     public TableColumn<Project, LocalDate> deadlineColumn;
     @FXML
-    private CategoryAxis xAxis;
-
+    private Label nameLabel;
     @FXML
-    private NumberAxis yAxis;
+    private Label usernameLabel;
+    @FXML
+    private Label userIdLabel;
     @FXML
     private BarChart<String, Number> bugChart;
     @FXML
@@ -78,6 +79,10 @@ public class ProjectManagerDashboardController implements Initializable {
         settingsButton.setOnAction(settingsButtonHandler);
         logoutButton.setOnAction(logoutButtonHandler);
 
+        usernameLabel.setText(loggedInUser.getUsername());
+        userIdLabel.setText(String.valueOf(loggedInUser.getUserId()));
+        nameLabel.setText(loggedInUser.getFullName());
+
         projectNameColumn.setCellValueFactory(new PropertyValueFactory<>("projectName"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
@@ -97,8 +102,6 @@ public class ProjectManagerDashboardController implements Initializable {
         // Add a listener to the projectTable selection
         projectTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // A new project is selected, update the bug chart
-                updateBugChart(newSelection);
 
                 // Update PieCharts based on the selected project
                 updateSeverityPieChart(newSelection);
@@ -122,49 +125,7 @@ public class ProjectManagerDashboardController implements Initializable {
         projectTable.getItems().addAll(projects);
     }
 
-    private void updateBugChart(Project selectedProject) {
-        // Initialize and update the bug chart for the selected project
-        initializeBarChart(selectedProject);
-    }
 
-    private void initializeBarChart(Project selectedProject) {
-        xAxis.setLabel("Month");
-        yAxis.setLabel("Number of Bugs");
-
-        XYChart.Series<String, Number> bugData = new XYChart.Series<>();
-
-        // Replace this with your bug data retrieval logic
-        List<Bug> bugs = BugDAO.getBugsForSelectedProject(selectedProject);
-
-        // Process the bug data to calculate the number of bugs per month
-        Map<String, Integer> bugsPerMonth = new HashMap<>();
-        DateTimeFormatter monthYearFormatter = DateTimeFormatter.ofPattern("MM-yyyy");
-
-        for (Bug bug : bugs) {
-            LocalDate bugDate = bug.getCreatedDate(); // Replace with your bug date property
-            String monthYear = bugDate.format(monthYearFormatter);
-
-            // Increment the count for this month
-            bugsPerMonth.put(monthYear, bugsPerMonth.getOrDefault(monthYear, 0) + 1);
-        }
-
-        // Populate the bar chart
-        for (String monthYear : bugsPerMonth.keySet()) {
-            bugData.getData().add(new XYChart.Data<>(monthYear, bugsPerMonth.get(monthYear)));
-        }
-
-        bugChart.getData().setAll(bugData);
-
-        xAxis.setTickLabelRotation(0);
-        xAxis.setTickLabelFont(Font.font(10));
-
-        // Customize the y-axis to display integers from 1 to 10
-        yAxis.setTickUnit(1);
-        yAxis.setAutoRanging(false); // Disable auto-ranging
-        yAxis.setLowerBound(1); // Set lower bound to 1
-        yAxis.setUpperBound(10);
-
-    }
     private void updateSeverityPieChart(Project selectedProject) {
         severityData.clear();
 

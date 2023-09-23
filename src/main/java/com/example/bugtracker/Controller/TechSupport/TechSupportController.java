@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,6 +20,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+
+import static com.example.bugtracker.Controller.Login.LoginController.loggedInUser;
 
 
 public class TechSupportController implements Initializable {
@@ -40,10 +43,13 @@ public class TechSupportController implements Initializable {
     @FXML
     public Button techSupportButton;
     @FXML
-    public TableColumn<Project, Hyperlink> actionsColumn;
-    @FXML
     public Button logoutButton;
-
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label userIdLabel;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ButtonHandler settingsButtonHandler = new ButtonHandler("/com/example/bugtracker/TechSupport/TechSupportSettings.fxml");
@@ -53,6 +59,10 @@ public class TechSupportController implements Initializable {
         settingsButton.setOnAction(settingsButtonHandler);
         techSupportButton.setOnAction(techSupportButtonHandler);
         logoutButton.setOnAction(logoutButtonHandler);
+
+        usernameLabel.setText(loggedInUser.getUsername());
+        userIdLabel.setText(String.valueOf(loggedInUser.getUserId()));
+        nameLabel.setText(loggedInUser.getFullName());
 
         searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
             filterProjects(newValue);
@@ -69,28 +79,33 @@ public class TechSupportController implements Initializable {
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("projectDescription"));
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
-        actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Hyperlink hyperlink = new Hyperlink("View Bugs");
+        projectNameColumn.setCellFactory(col -> {
+            TableCell<Project, String> cell = new TableCell<Project, String>() {
+                final Hyperlink hyperlink = new Hyperlink();
 
-            {
-                hyperlink.setOnAction(event -> {
-                    Project project = getTableRow().getItem();
-                    if (project != null) {
-                        openBugsForProject(project);
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        // Set the project name as the hyperlink text
+                        hyperlink.setText(item);
+                        setGraphic(hyperlink);
+
+                        // Define the action to perform when the hyperlink is clicked
+                        hyperlink.setOnAction(event -> {
+                            Project project = getTableView().getItems().get(getIndex());
+                            // Navigate to the project details page with the selected project
+                            openBugsForProject(project);
+                        });
                     }
-                });
-            }
-
-            @Override
-            protected void updateItem(Hyperlink item, boolean empty) {
-                super.updateItem(item, empty);
-                if (!empty) {
-                    setGraphic(hyperlink);
-                } else {
-                    setGraphic(null);
                 }
-            }
+            };
+            return cell;
         });
+
         fillProjectTable();
 
     }

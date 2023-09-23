@@ -126,12 +126,12 @@
                         <AnchorPane layoutX="1.0" prefHeight="815.0" prefWidth="1301.0">
                             <children>
                                 <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
-                                <Label layoutX="592.0" layoutY="56.0" prefHeight="54.0" prefWidth="172.0" text="DASHBOARD" textAlignment="CENTER" wrapText="true">
+                                <Label layoutX="598.0" layoutY="56.0" prefHeight="54.0" prefWidth="172.0" text="DASHBOARD" textAlignment="CENTER" wrapText="true">
                                     <font>
                                         <Font name="Arial Rounded MT Bold" size="24.0" />
                                     </font>
                                 </Label>
-                        <LineChart fx:id="bugsTimeChart" layoutX="8.0" layoutY="123.0" prefHeight="666.0" prefWidth="1285.0">
+                        <LineChart fx:id="bugsTimeChart" layoutX="8.0" layoutY="271.0" prefHeight="513.0" prefWidth="1285.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -139,7 +139,25 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-
+                                <Pane layoutX="14.0" layoutY="122.0" prefHeight="125.0" prefWidth="1283.0" style="-fx-background-color: #FAF9F6;;">
+                                    <children>
+                                        <Label layoutX="624.0" layoutY="-2.0" text="Admin">
+                                            <font>
+                                                <Font size="23.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="nameLabel" alignment="CENTER" layoutX="576.0" layoutY="55.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                                        <Label layoutX="530.0" layoutY="69.0" text="Name :" />
+                                        <Label fx:id="usernameLabel" alignment="CENTER" layoutX="576.0" layoutY="86.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                                        <Label layoutX="511.0" layoutY="99.0" text="Username :" />
+                                        <Label layoutX="523.0" layoutY="39.0" text="User ID : " />
+                                        <Label fx:id="userIdLabel" alignment="CENTER" layoutX="576.0" layoutY="24.0" prefHeight="30.0" prefWidth="250.0" style="-fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+                              <ImageView fitHeight="97.0" fitWidth="121.0" layoutX="345.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../images/icons8-administrator-96.png" />
+                                 </image>
+                              </ImageView>
+                                    </children></Pane>
 
 
 

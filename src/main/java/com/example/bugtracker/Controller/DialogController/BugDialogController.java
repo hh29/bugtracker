@@ -79,7 +79,11 @@ public class BugDialogController implements Initializable {
                         originalSeverity.equals(severityComboBox.getValue()) &&
                         originalEstimatedTime.equals(estimatedTime.getText())) {
                     // No changes are made, retain original Updated Date
+
                     hasChanges = false;
+                    showAlert("Ticket Updated", "The ticket has been successfully updated.");
+                    closeDialog();
+
                 }
             }
 
@@ -192,13 +196,13 @@ public class BugDialogController implements Initializable {
                     showAlert("Ticket Updated", "The ticket has been successfully updated.");
 
 
-                    okClicked = true;
-                    closeDialog();
                 }
-            } else {
+                okClicked = true;
+                closeDialog();
+            }
+        } else {
                 showValidationAlert();
             }
-        }
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -241,6 +245,7 @@ public class BugDialogController implements Initializable {
                 severityComboBox.getValue() != null &&
                 !estimatedTime.getText().isEmpty();
     }
+
 
     private void showValidationAlert() {
         Alert alert = new Alert(Alert.AlertType.WARNING);

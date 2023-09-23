@@ -233,7 +233,6 @@ public class DeveloperProjectDetailsController implements Initializable {
 
         // Set up the BugDialogController
         BugDialogController controller = loader.getController();
-
         controller.setProjectId(selectedProject.getProjectId());
 
         dialogStage.showAndWait();
@@ -247,11 +246,15 @@ public class DeveloperProjectDetailsController implements Initializable {
 
                 // Show a success message
                 showAlert("Ticket Inserted", "New ticket has been successfully inserted.");
-            }
-                // Refresh the bugs table
-                populateBugsTableForSelectedProject();
+
+
+
+                // Refresh the bugs table in DeveloperProjectDetailsController
             }
         }
+        populateBugsTableForSelectedProject();
+    }
+
 
     public void backButton(ActionEvent actionEvent) {
         try {

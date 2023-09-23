@@ -1,6 +1,7 @@
 package com.example.bugtracker.Controller.Developer;
 
 import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
+import com.example.bugtracker.Controller.TechSupport.TechSupportDetailsController;
 import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
 import com.example.bugtracker.Model.Entity.Bug;
@@ -89,6 +90,33 @@ public class DeveloperProjectsController implements Initializable {
         logoutButton.setOnAction(logoutButtonHandler);
 
         projectColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjectName()));
+        projectColumn.setCellFactory(col -> {
+            TableCell<Project, String> cell = new TableCell<Project, String>() {
+                final Hyperlink hyperlink = new Hyperlink();
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item == null || empty) {
+                        setGraphic(null);
+                    } else {
+                        // Set the project name as the hyperlink text
+                        hyperlink.setText(item);
+                        setGraphic(hyperlink);
+
+                        // Define the action to perform when the hyperlink is clicked
+                        hyperlink.setOnAction(event -> {
+                            Project project = getTableView().getItems().get(getIndex());
+                            // Navigate to the project details page with the selected project
+                           openBugsForProject (project);
+                        });
+                    }
+                }
+            };
+            return cell;
+        });
+
         statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
         projectManagerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
                 cellData.getValue().getManagerFirstName() + " " + cellData.getValue().getManagerLastName()));
@@ -103,7 +131,6 @@ public class DeveloperProjectsController implements Initializable {
         });
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjectDescription()));
         priorityColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPriority()));
-        actionsColumn.setCellFactory(createHyperlinkCellFactory());
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -140,54 +167,6 @@ public class DeveloperProjectsController implements Initializable {
         daysTillDeadlineLabel.setText("");
     }
 
-    private Callback<TableColumn<Project, Hyperlink>, TableCell<Project, Hyperlink>> createHyperlinkCellFactory() {
-        return new Callback<>() {
-            @Override
-            public TableCell<Project, Hyperlink> call(TableColumn<Project, Hyperlink> param) {
-                return new TableCell<>() {
-                    private final Hyperlink detailsLink = new Hyperlink("View Tickets");
-
-                    {
-                        detailsLink.setOnAction(this::handleDetailsLink);
-                    }
-
-                    @FXML
-                    private void handleDetailsLink(javafx.event.ActionEvent actionEvent) {
-                        Project project = getTableRow().getItem();
-                        if (project != null) {
-                            try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bugtracker/Developer/DeveloperProjectDetails.fxml"));
-                                Parent detailsRoot = loader.load();
-
-                                DeveloperProjectDetailsController detailsController = loader.getController();
-                                detailsController.setSelectedProject(project.getProjectId());
-
-                                // Get the stage of the current scene
-                                Stage currentStage = (Stage) tableView.getScene().getWindow();
-
-                                // Set the new scene to the current stage
-                                Scene detailsScene = new Scene(detailsRoot);
-                                currentStage.setScene(detailsScene);
-                                currentStage.setTitle("Project Details");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-
-                    @Override
-                    protected void updateItem(Hyperlink item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty) {
-                            setGraphic(detailsLink);
-                        } else {
-                            setGraphic(null);
-                        }
-                    }
-                };
-            }
-        };
-    }
 
 
     public void populateTable() {
@@ -233,6 +212,26 @@ public class DeveloperProjectsController implements Initializable {
 
 
 
+
+    }
+    private void openBugsForProject(Project project) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bugtracker/Developer/DeveloperProjectDetails.fxml"));
+            Parent detailsRoot = loader.load();
+
+            DeveloperProjectDetailsController detailsController = loader.getController();
+            detailsController.setSelectedProject(project.getProjectId());
+
+            // Get the stage of the current scene
+            Stage currentStage = (Stage) tableView.getScene().getWindow();
+
+            // Set the new scene to the current stage
+            Scene detailsScene = new Scene(detailsRoot);
+            currentStage.setScene(detailsScene);
+            currentStage.setTitle("Project Details");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

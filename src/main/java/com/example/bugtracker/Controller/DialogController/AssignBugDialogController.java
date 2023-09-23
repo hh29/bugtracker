@@ -116,6 +116,10 @@ public class AssignBugDialogController implements Initializable {
                 showValidationAlert();
                 return; // Don't proceed further if input is not valid
             }
+            if (selectedUser == null) {
+                showAlert("Error", "You must assign this ticket to a user.");
+                return; // Don't proceed further
+            }
 
             if (bug == null) {
                 // Create a new Bug object with the provided data
@@ -135,6 +139,7 @@ public class AssignBugDialogController implements Initializable {
 
                 // Set the updatedDate
                 newBug.setUpdatedDate(Date.valueOf(LocalDate.now()).toLocalDate());
+
                 // Insert the new bug into the database
                int newBugId =  BugDAO.insertBug(newBug);
                newBug.setBugId(newBugId);
@@ -144,6 +149,8 @@ public class AssignBugDialogController implements Initializable {
                     // Insert the bug_id and user_id into the bug_user table
                     BugDAO.assignBugToUser(newBug, selectedUser);
                 }
+
+
                 // Close the dialog and show a success message
                 closeDialog();
                 showAlert("Success", "Bug has been successfully inserted.");
@@ -167,6 +174,9 @@ public class AssignBugDialogController implements Initializable {
                     bug.setEstimatedTimeToComplete(estimatedTime.getText());
                     bug.setUpdatedDate(Date.valueOf(LocalDate.now()).toLocalDate());
 
+
+
+
                     // Check if the status has changed to "Testing" and the user is not a tester
                     if ("Testing".equals(bug.getStatus()) && !selectedUser.getRoleName().equals("Tester")) {
                         showAlert("Error", "For a status with 'Testing', the ticket must be assigned to a tester.");
@@ -182,9 +192,9 @@ public class AssignBugDialogController implements Initializable {
                     // Bug has no previous assignment, so simply assign to the selected user
                     BugDAO.assignBugToUser(bug, selectedUser);
                 } else if (!selectedUser.equals(previouslyAssignedUser)) {
+
                     // Remove the previous assignment and assign to the selected user
-                    BugDAO.removeBugFromUser(bug, previouslyAssignedUser);
-                    BugDAO.assignBugToUser(bug, selectedUser);
+                    BugDAO.updateBugAssignedUser(bug.getBugId(),selectedUser.getUserId());
                 }  // Close the dialog and show a success message
                 closeDialog();
                 showAlert("Success", "Bug has been successfully updated.");

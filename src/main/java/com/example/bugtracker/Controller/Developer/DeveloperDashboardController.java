@@ -45,6 +45,14 @@ public class DeveloperDashboardController implements Initializable {
     @FXML
     private Label projectsCompletedLabel;
     @FXML
+    private Label userIdLabel;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
     private PieChart bugPriorityPieChart;
     @FXML
     private PieChart unresolvedBugsPieChart;
@@ -81,6 +89,12 @@ public class DeveloperDashboardController implements Initializable {
 
     private void updateDashboardData() {
         if (loggedInUser != null) {
+            roleLabel.setText(String.valueOf(loggedInUser.getRole()));
+
+            userIdLabel.setText(String.valueOf(loggedInUser.getUserId()));
+            usernameLabel.setText(loggedInUser.getUsername());
+            nameLabel.setText(loggedInUser.getFullName());
+
             int numberOfActiveProjects = getNumberOfActiveProjects();
             int numberOfUnresolvedBugs = getNumberOfUnresolvedBugs();
             int numberOfProjectsCompleted = getNumberOfProjectsCompleted();
