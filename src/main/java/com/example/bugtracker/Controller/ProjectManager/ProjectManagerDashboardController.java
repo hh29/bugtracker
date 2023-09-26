@@ -11,10 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
 
@@ -88,6 +85,20 @@ public class ProjectManagerDashboardController implements Initializable {
         priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("projectDescription"));
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        deadlineColumn.setCellFactory(column -> new TableCell<Project, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(dateFormatter));
+                }
+            }
+        });
 
         fillProjectTable();
 

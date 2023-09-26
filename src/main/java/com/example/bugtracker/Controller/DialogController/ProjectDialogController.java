@@ -1,5 +1,6 @@
 package com.example.bugtracker.Controller.DialogController;
 
+import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
 import com.example.bugtracker.Model.DAO.UserDAO;
 import com.example.bugtracker.Model.Entity.Project;
@@ -131,38 +132,38 @@ public class ProjectDialogController implements Initializable {
                 // Get the list of users currently assigned to the project
                 List<User> currentlyAssignedUsers = ProjectDAO.getDevelopersOrTestersForProject(project);
 
-                // Get the list of selected developers from the assignedDevelopersList
+                // Get the list of selected members from the assignedUsersList
                 List<User> selectedUsers = assignedUserList.getItems().filtered(User::isSelected);
 
-                // Create a list to track developers to add
-                List<User> developersToAdd = new ArrayList<>();
+                // Create a list to track members to add
+                List<User> membersToAdd = new ArrayList<>();
 
                 // Iterate through the selected developers
                 for (User selectedUser : selectedUsers) {
                     // If the selected developer is not in the list of currently assigned developers, add them to the list to add
                     if (!currentlyAssignedUsers.contains(selectedUser)) {
-                        developersToAdd.add(selectedUser);
+                        membersToAdd.add(selectedUser);
                     }
                 }
 
                 // Create a list to track developers to remove
-                List<User> developersToRemove = new ArrayList<>();
+                List<User> membersToRemove = new ArrayList<>();
 
                 // Iterate through the currently assigned developers
                 for (User assignedUser : currentlyAssignedUsers) {
                     // If the assigned developer is not in the list of selected developers, add them to the list to remove
                     if (!selectedUsers.contains(assignedUser)) {
-                        developersToRemove.add(assignedUser);
+                        membersToRemove.add(assignedUser);
                     }
                 }
 
                 // Assign the newly selected developers to the project
-                ProjectDAO.assignUsersToProject(developersToAdd, project);
+                ProjectDAO.assignUsersToProject(membersToAdd, project);
 
                 // Remove the deselected developers from the project
-                for (User developerToRemove : developersToRemove) {
-                    ProjectDAO.removeProjectFromUser(developerToRemove, project);
-                    System.out.println("Removed Developer: " + developerToRemove.getFullName() + " (ID: " + developerToRemove.getUserId() + ")");
+                for (User memberToRemove : membersToRemove) {
+                    ProjectDAO.removeProjectFromUser(memberToRemove, project);
+                    BugDAO.removeBugsFromUserInProject(memberToRemove,project);
                 }
 
                 okClicked = true;

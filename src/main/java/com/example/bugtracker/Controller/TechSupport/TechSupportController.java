@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -78,7 +79,19 @@ public class TechSupportController implements Initializable {
                 cellData.getValue().getManagerFirstName() + " " + cellData.getValue().getManagerLastName()));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("projectDescription"));
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        deadlineColumn.setCellFactory(column -> new TableCell<Project, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
 
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(dateFormatter));
+                }
+            }
+        });
         projectNameColumn.setCellFactory(col -> {
             TableCell<Project, String> cell = new TableCell<Project, String>() {
                 final Hyperlink hyperlink = new Hyperlink();
@@ -149,13 +162,21 @@ public class TechSupportController implements Initializable {
                 int projectId = Integer.parseInt(keyword);
                 return project.getProjectId() == projectId ||
                         project.getProjectName().toLowerCase().contains(lowerCaseKeyword) ||
-                        project.getProjectDescription().toLowerCase().contains(lowerCaseKeyword)||
-                         project.getManagerFirstName().toLowerCase().contains(lowerCaseKeyword) ||
-                         project.getManagerLastName().toLowerCase().contains(lowerCaseKeyword) ||
-                         project.getPriority().toLowerCase().contains(lowerCaseKeyword);
+                        project.getProjectDescription().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getManagerFirstName().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getManagerLastName().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getStatus().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getPriority().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getPriority().toLowerCase().startsWith(lowerCaseKeyword);
             } catch (NumberFormatException e) {
                 return project.getProjectName().toLowerCase().contains(lowerCaseKeyword) ||
-                        project.getProjectDescription().toLowerCase().contains(lowerCaseKeyword);
+                        project.getProjectDescription().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getManagerFirstName().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getManagerLastName().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getStatus().toLowerCase().contains(lowerCaseKeyword) ||
+
+                        project.getPriority().toLowerCase().contains(lowerCaseKeyword) ||
+                        project.getPriority().toLowerCase().startsWith(lowerCaseKeyword);
             }
         };
 
@@ -167,7 +188,11 @@ public class TechSupportController implements Initializable {
 
         // Add the filtered projects to the table
         projectTable.getItems().addAll(filteredProjects);
+
+        // Refresh the table to reflect the changes
+        projectTable.refresh();
     }
+
 
 
 }

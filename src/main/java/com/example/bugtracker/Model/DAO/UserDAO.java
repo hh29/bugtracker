@@ -203,7 +203,8 @@ public class UserDAO {
         String query = "SELECT COUNT(DISTINCT project_user.project_id) AS active_projects " +
                 "FROM projects " +
                 "JOIN project_user ON projects.project_id = project_user.project_id " +
-                "WHERE project_user.user_id = ? AND projects.status = 'In Progress'";
+                "WHERE project_user.user_id = ? AND projects.status IN ('In Progress', 'New')";
+
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -225,7 +226,7 @@ public class UserDAO {
         String query = "SELECT COUNT(DISTINCT bug_user.bug_id) AS unresolved_bugs " +
                 "FROM bugs " +
                 "JOIN bug_user ON bugs.bug_id = bug_user.bug_id " +
-                "WHERE bug_user.user_id = ? AND bugs.status = 'In Progress'";
+                "WHERE bug_user.user_id = ? AND bugs.status IN ('In Progress', 'New', 'Testing', 'Reopened')";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

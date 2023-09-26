@@ -131,14 +131,19 @@
                                         <Font name="Arial Rounded MT Bold" size="24.0" />
                                     </font>
                                 </Label>
-                        <LineChart fx:id="bugsTimeChart" layoutX="8.0" layoutY="271.0" prefHeight="513.0" prefWidth="1285.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
+                                <LineChart fx:id="bugsTimeChart" layoutX="8.0" layoutY="271.0" prefHeight="517.0" prefWidth="1274.0">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM">
+                                            <label>Month</label>
+                                        </CategoryAxis>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis fx:id="NumberAx" side="LEFT" tickUnit="5">
+                                            <label>Bug Count</label>
+                                        </NumberAxis>
+                                    </yAxis>
+                                </LineChart>
+
                                 <Pane layoutX="14.0" layoutY="122.0" prefHeight="125.0" prefWidth="1283.0" style="-fx-background-color: #FAF9F6;;">
                                     <children>
                                         <Label layoutX="624.0" layoutY="-2.0" text="Admin">

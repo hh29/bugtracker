@@ -116,10 +116,10 @@
                                 <Pane layoutX="-2.0" layoutY="110.0" opacity="0.5" prefHeight="4.0" prefWidth="978.0" style="-fx-background-color: #E1D9D1;" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-125.0" />
                                 <TableView fx:id="projectTable" layoutX="5.0" layoutY="253.0" prefHeight="545.0" prefWidth="1007.0" style="-fx-background-color: transparent;">
                                     <columns>
-                                        <TableColumn fx:id="projectNameColumn" prefWidth="127.08198547363281" text="Project Name" />
-                                        <TableColumn fx:id="descriptionColumn" prefWidth="309.46337890625" text="Description" />
-                                        <TableColumn fx:id="statusColumn" prefWidth="191.03662109375" text="Status" />
-                                        <TableColumn fx:id="priorityColumn" prefWidth="236.2545166015625" text="Priority" />
+                                        <TableColumn fx:id="projectNameColumn" prefWidth="192.5" text="Project Name" />
+                                        <TableColumn fx:id="descriptionColumn" prefWidth="368.5" text="Description" />
+                                        <TableColumn fx:id="statusColumn" prefWidth="144.5" text="Status" />
+                                        <TableColumn fx:id="priorityColumn" prefWidth="159.5" text="Priority" />
                                         <TableColumn fx:id="deadlineColumn" prefWidth="137.97027587890625" text="Deadline" />
                                     </columns>
                                 </TableView>

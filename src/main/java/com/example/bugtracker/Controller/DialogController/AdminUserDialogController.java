@@ -233,6 +233,13 @@ public class AdminUserDialogController implements Initializable {
         }
 
 
+        if (newRole == Roles.ProjectManager || (newRole == Roles.Developer && selectedUser.getRole() == Roles.Tester) || (newRole == Roles.Tester && selectedUser.getRole() == Roles.Developer)) {
+            // Remove all bugs associated with the user if:
+            // 1. The new role is Project Manager OR
+            // 2. The new role is Developer and the old role was Tester OR
+            // 3. The new role is Tester and the old role was Developer
+            BugDAO.removeBugsFromUser(selectedUser);
+        }
 
         // Update user details and assigned projects
         if (newRole == selectedUser.getRole()) {

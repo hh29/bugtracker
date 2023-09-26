@@ -70,6 +70,13 @@ public class LoginController implements Initializable {
                 String fullName = loginModel.getUserFullName(loggedInUserId);
                 loggedInUser = new User(loggedInUserId,fullName, username, password,selectedRole);
 
+                // Show a confirmation dialog
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login Successful");
+                alert.setHeaderText("Welcome, " + fullName);
+                alert.setContentText("Login was successful!");
+                alert.showAndWait();
+
                 Stage stage = (Stage) this.loginButton.getScene().getWindow();
                 stage.close();
 

@@ -16,13 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -87,8 +90,11 @@ public class ProjectManagerProjectDetailsController implements Initializable {
                 return new SimpleStringProperty("Unassigned");
             }
         });
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         updatedDateColumn.setCellValueFactory(date ->date.getValue().updatedDateProperty());
+        updatedDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
+
         severityColumn.setCellValueFactory(data -> data.getValue().severityProperty());
 
 

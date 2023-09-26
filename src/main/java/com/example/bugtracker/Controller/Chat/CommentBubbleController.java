@@ -3,6 +3,7 @@ package com.example.bugtracker.Controller.Chat;
 import com.example.bugtracker.Model.Entity.Comment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,12 +14,15 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CommentBubbleController {
     @FXML
     private Label nameLabel;
     @FXML private Label textLabel;
     @FXML private Label timestampLabel;
+
     @FXML private VBox commentVBox;
     private Comment comment;
 

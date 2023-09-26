@@ -98,7 +98,6 @@ public class ChatController {
             }
 
             // Scroll to the bottom
-            Platform.runLater(() -> chatScrollPane.setVvalue(1.0));
 
         } catch (SQLException e) {
             e.printStackTrace();

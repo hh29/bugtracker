@@ -4,6 +4,7 @@ import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
 import com.example.bugtracker.Model.DAO.BugDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -64,17 +65,8 @@ public class AdminDashboardController implements Initializable {
         configureBugCountChart();
 
     }
+    @FXML
     private void configureBugCountChart() {
-        bugsTimeChart.setTitle("Bug Count Over Time");
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Month");
-        yAxis.setLabel("Bug Count");
-        yAxis.setLabel("Bug Count");
-        yAxis.setTickUnit(1);
-
-        bugsTimeChart.setCreateSymbols(true);
-
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         Map<String, Integer> bugCounts = BugDAO.getBugCountsByMonth();
 
@@ -82,7 +74,13 @@ public class AdminDashboardController implements Initializable {
             series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
         }
 
+        // Set the y-axis for the LineChart
+        bugsTimeChart.getYAxis().setLabel("Bug Count");
+        bugsTimeChart.getXAxis().setLabel("Month");
+
+
         bugsTimeChart.getData().add(series);
     }
+
 
 }

@@ -20,13 +20,17 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.example.bugtracker.Controller.Login.LoginController.loggedInUser;
 
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.LocalDateStringConverter;
 
 public class DeveloperTicketsController implements Initializable {
     @FXML
@@ -86,7 +90,12 @@ public class DeveloperTicketsController implements Initializable {
 
         ticketColumn.setCellValueFactory(data -> data.getValue().bugTitleProperty());
         statusColumn.setCellValueFactory(data -> data.getValue().statusProperty());
-        dateCreatedColumn.setCellValueFactory(data -> data.getValue().createdDateProperty());
+        // Define the date format
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Set the cell value factory and cell factory
+        dateCreatedColumn.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
+        dateCreatedColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
         priorityColumn.setCellValueFactory(data -> data.getValue().priorityProperty());
         severityColumn.setCellValueFactory(data->data.getValue().severityProperty());
         timeToCompleteColumn.setCellValueFactory(data->data.getValue().estimatedTimeToCompleteProperty());
@@ -221,26 +230,23 @@ public class DeveloperTicketsController implements Initializable {
                     // Sort by Project
                         sortedBugs.sort(Comparator.comparing(Bug::getProjectName));
                 case "Severity" ->
-                    // Sort by Severity (custom comparator)
+                    // Sort by Severity
                         sortedBugs.sort((bug1, bug2) -> {
                             // Define the custom sorting order for severity
-                            List<String> severityOrder = Arrays.asList("critical", "major", "minor");
-                            int index1 = severityOrder.indexOf(bug1.getSeverity().toLowerCase());
-                            int index2 = severityOrder.indexOf(bug2.getSeverity().toLowerCase());
+                            List<String> severityOrder = Arrays.asList("Critical", "Major", "Minor");
+                            int index1 = severityOrder.indexOf(bug1.getSeverity());
+                            int index2 = severityOrder.indexOf(bug2.getSeverity());
                             return Integer.compare(index1, index2);
                         });
                 case "Priority" ->
-                    // Sort by Priority (custom comparator)
+                    // Sort by Priority
                         sortedBugs.sort((bug1, bug2) -> {
                             // Define the custom sorting order for priority
-                            List<String> priorityOrder = Arrays.asList("high", "medium", "low");
-                            int index1 = priorityOrder.indexOf(bug1.getPriority().toLowerCase());
-                            int index2 = priorityOrder.indexOf(bug2.getPriority().toLowerCase());
+                            List<String> priorityOrder = Arrays.asList("High", "Medium", "Low");
+                            int index1 = priorityOrder.indexOf(bug1.getPriority());
+                            int index2 = priorityOrder.indexOf(bug2.getPriority());
                             return Integer.compare(index1, index2);
                         });
-                default -> {
-                    // Handle other cases if needed
-                }
             }
 
             // Update the TableView with the sorted data

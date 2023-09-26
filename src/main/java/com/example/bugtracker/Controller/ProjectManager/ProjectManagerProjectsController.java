@@ -17,13 +17,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -118,10 +121,15 @@ public class ProjectManagerProjectsController implements Initializable {
             };
             return cell;
         });
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         priorityColumn.setCellValueFactory(new PropertyValueFactory<>("priority"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("projectDescription"));
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        deadlineColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
+
 
         projectTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

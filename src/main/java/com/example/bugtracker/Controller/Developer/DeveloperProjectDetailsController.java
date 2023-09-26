@@ -18,8 +18,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -94,7 +96,7 @@ public class DeveloperProjectDetailsController implements Initializable {
         logoutButton.setOnAction(logoutButtonHandler);
 
 
-
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // Initialize the TableView columns to map to the Bug class properties
         bugIDColumn.setCellValueFactory(data -> data.getValue().bugIdProperty().asObject());
@@ -112,7 +114,12 @@ public class DeveloperProjectDetailsController implements Initializable {
             }
         });
         createdDateColumn.setCellValueFactory(data -> data.getValue().createdDateProperty());
+        createdDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
+
+
         updatedDateColumn.setCellValueFactory(data -> data.getValue().updatedDateProperty());
+        updatedDateColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
+
         timeToCompleteColumn.setCellValueFactory(data -> data.getValue().estimatedTimeToCompleteProperty());
 
         severityColumn.setCellValueFactory(data -> data.getValue().severityProperty());

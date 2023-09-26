@@ -12,6 +12,7 @@ module com.example.bugtracker {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.postgresql.jdbc;
+    requires junit;
 
     exports com.example.bugtracker.Controller.DialogController;
     exports com.example.bugtracker.Model.DAO;

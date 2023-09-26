@@ -220,93 +220,8 @@ public class BugDAO {
         }
     }
 
-    public static int getAllUnresolvedBugs() {
-        int numberOfUnresolvedBugs = 0;
-        String query = "SELECT COUNT(*) AS unresolved_bugs\n" +
-                "FROM bugs\n" +
-                "WHERE status <>  'Closed';\n";
-
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()) {
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            if (resultSet.next()) {
-                numberOfUnresolvedBugs = resultSet.getInt("unresolved_bugs");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return numberOfUnresolvedBugs;
-    }
-
-    public static String getAverageResolutionTime() {
-        Duration totalDuration = Duration.ZERO;
-        int resolvedBugsCount = 0;
-
-        String query = "SELECT created_date, updated_date FROM bugs WHERE status = 'Resolved'";
-
-        try {
-            try (Connection connection = getConnection();
-                 Statement statement = connection.createStatement()) {
-
-                ResultSet resultSet = statement.executeQuery(query);
-
-                while (resultSet.next()) {
-                    Timestamp createdTimestamp = resultSet.getTimestamp("created_date");
-                    Timestamp updatedTimestamp = resultSet.getTimestamp("updated_date");
-
-                    if (createdTimestamp != null && updatedTimestamp != null) {
-                        resolvedBugsCount++;
-                        totalDuration = totalDuration.plus(Duration.between(createdTimestamp.toLocalDateTime(), updatedTimestamp.toLocalDateTime()));
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (resolvedBugsCount > 0) {
-                long totalMinutes = totalDuration.toMinutes();
-                long averageMinutes = totalMinutes / resolvedBugsCount;
-
-                long days = averageMinutes / (24 * 60);
-                long hours = (averageMinutes % (24 * 60)) / 60;
 
 
-                if (days > 0) {
-                    return String.format("%d days", days);
-                } else {
-                    return String.format("%d hours", hours);
-                }
-            } else {
-                return "N/A"; // No resolved bugs
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static int getNumberOfActiveProjects() {
-        int numberOfActiveProjects = 0;
-        String query = "SELECT COUNT(DISTINCT projects.project_id) AS active_projects\n" +
-                "FROM projects;";
-
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement()) {
-
-            ResultSet resultSet = statement.executeQuery(query);
-
-            if (resultSet.next()) {
-                numberOfActiveProjects = resultSet.getInt("active_projects");
-            }
-        } catch (SQLException e) {
-            System.out.println(numberOfActiveProjects);
-            e.printStackTrace();
-        }
-        return numberOfActiveProjects;
-    }
 
     public static Map<String, Integer> getBugCountsByMonth() {
         String query = "SELECT TO_CHAR(created_date, 'YYYY-MM') AS month, COUNT(*) AS bug_count " +
@@ -458,7 +373,7 @@ public class BugDAO {
             e.printStackTrace();
         }
 
-        return null; // Return null if no assigned developer is found
+        return null; // Return null if no assigned user is found
     }
 
     public static int findTesterWithLeastTasks(int projectId) throws SQLException {
@@ -584,6 +499,21 @@ public class BugDAO {
             throw new RuntimeException(ex);
         }
     }
+    public static void removeBugsFromUser(User user) {
+        String query = "DELETE FROM public.bug_user WHERE user_id = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            // Set user ID as a parameter
+            statement.setInt(1, user.getUserId());
+
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public static void updateBugAssignedUser(int bugId, int selectedTesterUserId) {
         // Define the SQL query for updating the bug_user table
         String updateQuery = "UPDATE bug_user SET user_id = ? WHERE bug_id = ?";
