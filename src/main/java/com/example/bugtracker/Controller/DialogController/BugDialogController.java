@@ -1,10 +1,8 @@
 package com.example.bugtracker.Controller.DialogController;
 
-import com.example.bugtracker.Model.DAO.UserDAO;
+
 import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Model.DAO.BugDAO;
-import com.example.bugtracker.Controller.Login.LoginController;
-import com.example.bugtracker.Model.Entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

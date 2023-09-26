@@ -13,7 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Font;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -87,18 +89,8 @@ public class ProjectManagerDashboardController implements Initializable {
         deadlineColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        deadlineColumn.setCellFactory(column -> new TableCell<Project, LocalDate>() {
-            @Override
-            protected void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty);
 
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.format(dateFormatter));
-                }
-            }
-        });
+        deadlineColumn.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter(dateFormatter, dateFormatter)));
 
         fillProjectTable();
 

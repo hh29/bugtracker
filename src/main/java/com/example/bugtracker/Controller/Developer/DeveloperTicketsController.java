@@ -5,9 +5,7 @@ import com.example.bugtracker.Controller.DialogController.BugDialogController;
 import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
 import com.example.bugtracker.Model.DAO.BugDAO;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

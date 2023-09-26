@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//USER CREDENTIALS ARE LOCATED IN THE README IF YOU DO NOT WISH TO CREATE NEW USERS
+
 public class LoginController implements Initializable {
     LoginModel loginModel = new LoginModel();
     @FXML

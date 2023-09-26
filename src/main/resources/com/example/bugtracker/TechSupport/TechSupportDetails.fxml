@@ -104,7 +104,7 @@
                                         <Font name="Arial Rounded MT Bold" size="24.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="tableView" layoutX="11.0" layoutY="165.0" prefHeight="580.0" prefWidth="1278.0" style="-fx-background-color: transparent;">
+                                <TableView fx:id="tableView" layoutX="11.0" layoutY="165.0" prefHeight="580.0" prefWidth="1278.0">
                                     <columns>
                                         <TableColumn fx:id="bugIDColumn" prefWidth="45.0" text="ID" />
                                         <TableColumn fx:id="bugTitleColumn" prefWidth="123.0" text="Bug Title" />
@@ -113,7 +113,6 @@
                                         <TableColumn fx:id="statusColumn" prefWidth="138.0" text="Status" />
                                         <TableColumn fx:id="severityColumn" prefWidth="149.0" text="Severity" />
                                         <TableColumn fx:id="updatedDateColumn" minWidth="0.0" prefWidth="151.0" text="Updated Date" />
-                              <TableColumn fx:id="commentsColumn" prefWidth="143.0" text="Comments" />
                                     </columns>
                                 </TableView>
                                 <Button fx:id="backButton" layoutX="8.0" layoutY="122.0" mnemonicParsing="false" onAction="#backButton" prefHeight="44.0" prefWidth="62.0" style="-fx-background-color: transparent;" textFill="WHITE">

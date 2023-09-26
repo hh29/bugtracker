@@ -2,11 +2,10 @@ package com.example.bugtracker.Model.DAO;
 
 import com.example.bugtracker.DBConnection.DBConnection;
 import com.example.bugtracker.Model.Entity.*;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.sql.Date;
-import java.time.Duration;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -195,7 +194,7 @@ public class BugDAO {
         return false;
     }
 
-    public static boolean updateBug(Bug bug) {
+    public static void updateBug(Bug bug) {
         String query = "UPDATE bugs " +
                 "SET bug_title = ?, bug_description = ?, status = ?, priority = ?, " +
                 "severity = ?, estimated_time_to_complete = ?, updated_date = NOW() " +
@@ -212,11 +211,10 @@ public class BugDAO {
             statement.setString(6, bug.getEstimatedTimeToComplete());
             statement.setInt(7, bug.getBugId());
 
-            int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0;
+           statement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -343,13 +341,9 @@ public class BugDAO {
             statement.setInt(1, bugId);
             statement.setInt(2, userId);
 
-            int rowsInserted = statement.executeUpdate();
+             statement.executeUpdate();
 
-            if (rowsInserted > 0) {
-                // Association created successfully
-            } else {
-                // Association creation failed
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

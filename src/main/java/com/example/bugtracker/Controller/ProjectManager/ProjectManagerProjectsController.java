@@ -134,7 +134,6 @@ public class ProjectManagerProjectsController implements Initializable {
         projectTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 // When a project is selected
-
                 // Calculate days till deadline or display "Project Completed"
                 String daysTillDeadline = calculateDaysTillDeadline(newValue.getEndDate());
 

@@ -97,7 +97,6 @@ public class ChatController {
                 createCommentBubble(comment);
             }
 
-            // Scroll to the bottom
 
         } catch (SQLException e) {
             e.printStackTrace();

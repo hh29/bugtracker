@@ -1,6 +1,5 @@
 package com.example.bugtracker.Model.DAO;
 
-import com.example.bugtracker.Controller.Login.LoginController;
 import com.example.bugtracker.DBConnection.DBConnection;
 import com.example.bugtracker.Model.Entity.Roles;
 import com.example.bugtracker.Model.Entity.User;
@@ -265,10 +264,6 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-
-
-
-
 
 }
 

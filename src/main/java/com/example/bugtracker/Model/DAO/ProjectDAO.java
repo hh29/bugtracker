@@ -2,7 +2,6 @@ package com.example.bugtracker.Model.DAO;
 
 import com.example.bugtracker.DBConnection.DBConnection;
 import com.example.bugtracker.Model.Entity.Project;
-import com.example.bugtracker.Model.Entity.Roles;
 import com.example.bugtracker.Model.Entity.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -288,27 +287,6 @@ import java.util.List;
                 preparedStatement.executeUpdate();
             }
         }
-        public static boolean isUserAssignedToProject(User user, Project project) {
-            String query = "SELECT COUNT(*) FROM project_user WHERE project_id = ? AND user_id = ?";
-
-            try (Connection connection = DBConnection.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-                preparedStatement.setInt(1, project.getProjectId());
-                preparedStatement.setInt(2, user.getUserId());
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        int count = resultSet.getInt(1);
-                        return count > 0;
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return false;
-        }
 
 
         public static User getProjectManagerForProject(Project project) {
@@ -361,19 +339,6 @@ import java.util.List;
             }
 
             return false;
-        }
-
-        public static void updateProjectManager(Project project, User user) throws SQLException {
-            String query = "UPDATE public.projects SET project_manager = ? WHERE project_id = ?";
-
-            try (Connection connection = DBConnection.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(query)) {
-
-                statement.setInt(1, user.getUserId());
-                statement.setInt(2,project.getProjectId() );
-
-                statement.executeUpdate();
-            }
         }
         public static List<User> getProjectMembers(int projectId) throws SQLException {
             List<User> members = new ArrayList<>();
@@ -461,8 +426,4 @@ import java.util.List;
             }
             return null;
         }
-
-
-
-
     }

@@ -255,12 +255,12 @@ public class ProjectDialogController implements Initializable {
     public void populateUserList(Project project) throws SQLException {
         List<User> users = UserDAO.getUsersWithoutExcludedRoles();
 
-        // Get the list of developers assigned to the project
-        List<User> assignedDevelopers = ProjectDAO.getDevelopersOrTestersForProject(project);
+        // Get the list of users assigned to the project
+        List<User> assignedDevelopersTesters = ProjectDAO.getDevelopersOrTestersForProject(project);
 
         for (User user : users) {
             // Check if the user is in the list of assigned developers based on user_id
-            boolean isAssigned = assignedDevelopers.stream()
+            boolean isAssigned = assignedDevelopersTesters.stream()
                     .anyMatch(assignedUser -> assignedUser.getUserId() == user.getUserId());
             user.setSelected(isAssigned);
         }

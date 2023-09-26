@@ -117,7 +117,7 @@ public class AdminUsersController implements Initializable {
 
                 // Populate assignedProjectsTable with projects assigned to the selected user
                 populateAssignedProjectsTable(newValue);
-                // Call the updateProjectVisibility method with the selected user's role
+
                 updateProjectVisibility(newValue.getRole());
             } else {
                 // No user is selected, hide the projectTable and assignedProjectsLabel

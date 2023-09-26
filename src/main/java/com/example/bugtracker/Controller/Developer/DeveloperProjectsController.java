@@ -1,10 +1,7 @@
 package com.example.bugtracker.Controller.Developer;
 
 import com.example.bugtracker.Controller.ButtonHandler.ButtonHandler;
-import com.example.bugtracker.Controller.TechSupport.TechSupportDetailsController;
-import com.example.bugtracker.Model.DAO.BugDAO;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
-import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Model.Entity.Project;
 import com.example.bugtracker.Model.Entity.Roles;
 import com.example.bugtracker.Model.Entity.User;
@@ -15,15 +12,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Font;
+
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
 
 
 import java.io.IOException;

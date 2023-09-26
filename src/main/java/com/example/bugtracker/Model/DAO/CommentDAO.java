@@ -131,9 +131,5 @@ public class CommentDAO {
         return comments;
     }
 
-
-
-
-
 }
 

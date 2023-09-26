@@ -7,8 +7,6 @@ import com.example.bugtracker.Controller.DialogController.BugDialogController;
 import com.example.bugtracker.Model.DAO.ProjectDAO;
 import com.example.bugtracker.Model.Entity.Bug;
 import com.example.bugtracker.Model.Entity.Project;
-import com.example.bugtracker.Model.Entity.Reporter;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

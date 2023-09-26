@@ -95,21 +95,5 @@ public class LoginModel {
             return fullName;
         }
 
-    // Check if the user has the specified role type
-    public boolean isUserInRole(String username, int roleId) {
-        String query = "SELECT COUNT(*) FROM users JOIN user_roles ON users.user_id = user_roles.user_id WHERE username = ? AND role_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, username);
-            statement.setInt(2, roleId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1);
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     }

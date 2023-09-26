@@ -96,9 +96,6 @@ public class AdminUserDialogController implements Initializable {
 
                     });
 
-
-
-
                     // Fill other user details
                     userNameLabel.setText(selectedUser.getUsername());
                     firstNameLabel.setText(selectedUser.getFirstName());
