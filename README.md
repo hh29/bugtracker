@@ -19,3 +19,6 @@ Frontend: JavaFX
 Backend: Java
 Database: PostgreSQL
 
+
+TO ACCESS THE SOURCE CODE CHANGE TO THE MASTER BRANCH!
+
